@@ -1,0 +1,54 @@
+# Camera CMake config file
+#
+# This file sets the following variables:
+# Camera_FOUND - Always TRUE.
+# Camera_INCLUDE_DIRS - Directories containing the Camera include files.
+# Camera_IDL_DIRS - Directories containing the Camera IDL files.
+# Camera_LIBRARIES - Libraries needed to use Camera.
+# Camera_DEFINITIONS - Compiler flags for Camera.
+# Camera_VERSION - The version of Camera found.
+# Camera_VERSION_MAJOR - The major version of Camera found.
+# Camera_VERSION_MINOR - The minor version of Camera found.
+# Camera_VERSION_REVISION - The revision version of Camera found.
+# Camera_VERSION_CANDIDATE - The candidate version of Camera found.
+
+message(STATUS "Found Camera-@PROJECT_VERSION@")
+set(Camera_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(Camera_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(Camera_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(Camera_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(Camera_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(Camera_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(Camera_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(Camera_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(Camera_VERSION @PROJECT_VERSION@)
+set(Camera_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(Camera_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(Camera_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(Camera_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+

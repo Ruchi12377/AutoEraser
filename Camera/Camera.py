@@ -1,0 +1,338 @@
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# -*- Python -*-
+
+"""
+ @file Camera.py
+ @brief Output image from camera
+ @date $Date$
+
+
+"""
+import math
+import sys
+import time
+import cv2
+sys.path.append(".")
+
+# Import RTM module
+import RTC
+import OpenRTM_aist
+
+
+# Import Service implementation class
+# <rtc-template block="service_impl">
+
+# </rtc-template>
+
+# Import Service stub modules
+# <rtc-template block="consumer_import">
+# </rtc-template>
+
+
+# This module's spesification
+# <rtc-template block="module_spec">
+camera_spec = ["implementation_id", "Camera",
+		 "type_name",         "Camera",
+		 "description",       "Output image from camera",
+		 "version",           "1.0.0",
+		 "vendor",            "Ruchi",
+		 "category",          "Image",
+		 "activity_type",     "STATIC",
+		 "max_instance",      "1",
+		 "language",          "Python",
+		 "lang_type",         "SCRIPT",
+		 "conf.default.CameraIndex", "0",
+
+		 "conf.__widget__.CameraIndex", "spin",
+		 "conf.__constraints__.CameraIndex", "x<=5",
+
+         "conf.__type__.CameraIndex", "short",
+
+		 ""]
+# </rtc-template>
+
+##
+# @class Camera
+# @brief Output image from camera
+#
+#
+class Camera(OpenRTM_aist.DataFlowComponentBase):
+
+	##
+	# @brief constructor
+	# @param manager Maneger Object
+	#
+	def __init__(self, manager):
+		OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
+
+		self._d_image = OpenRTM_aist.instantiateDataType(RTC.CameraImage)
+		"""
+		"""
+		self._imageOut = OpenRTM_aist.OutPort("image", self._d_image)
+
+
+
+
+
+		# initialize of configuration-data.
+		# <rtc-template block="init_conf_param">
+		"""
+		I think you can only connect up to 5 or less
+		 - Name:  CameraIndex
+		 - DefaultValue: 0
+		"""
+		self._CameraIndex = [0]
+
+		# </rtc-template>
+		self.cameraIndexOld = [0]
+		self.vCap = [None]
+
+
+	##
+	#
+	# The initialize action (on CREATED->ALIVE transition)
+	# formaer rtc_init_entry()
+	#
+	# @return RTC::ReturnCode_t
+	#
+	#
+	def onInitialize(self):
+		# Bind variables and configuration variable
+		self.bindParameter("CameraIndex", self._CameraIndex, "0")
+
+		# Set InPort buffers
+
+		# Set OutPort buffers
+		self.addOutPort("image",self._imageOut)
+
+		# Set service provider to Ports
+
+		# Set service consumers to Ports
+
+		# Set CORBA Service Ports
+
+		return RTC.RTC_OK
+
+	###
+	## Destroy VideoCapture
+	##
+	## The finalize action (on ALIVE->END transition)
+	## formaer rtc_exiting_entry()
+	##
+	## @return RTC::ReturnCode_t
+	#
+	##
+	#def onFinalize(self):
+	#
+	#	return RTC.RTC_OK
+
+	###
+	##
+	## The startup action when ExecutionContext startup
+	## former rtc_starting_entry()
+	##
+	## @param ec_id target ExecutionContext Id
+	##
+	## @return RTC::ReturnCode_t
+	##
+	##
+	#def onStartup(self, ec_id):
+	#
+	#	return RTC.RTC_OK
+
+	###
+	##
+	## The shutdown action when ExecutionContext stop
+	## former rtc_stopping_entry()
+	##
+	## @param ec_id target ExecutionContext Id
+	##
+	## @return RTC::ReturnCode_t
+	##
+	##
+	#def onShutdown(self, ec_id):
+	#
+	#	return RTC.RTC_OK
+
+	##
+	# Initializing variables
+	#
+	# The activated action (Active state entry action)
+	# former rtc_active_entry()
+	#
+	# @param ec_id target ExecutionContext Id
+	#
+	# @return RTC::ReturnCode_t
+	#
+	#
+	def onActivated(self, ec_id):
+		#initialize vCam with cam index when activate
+		self.vCap = [cv2.VideoCapture(self._CameraIndex[0])]
+		
+		return RTC.RTC_OK
+
+	##
+	#
+	# The deactivated action (Active state exit action)
+	# former rtc_active_exit()
+	#
+	# @param ec_id target ExecutionContext Id
+	#
+	# @return RTC::ReturnCode_t
+	#
+	#
+	def onDeactivated(self, ec_id):
+		#release vCam memory
+		self.vCap[0].release()
+
+		return RTC.RTC_OK
+
+	##
+	# Send iamge from camera
+	#
+	# The execution action that is invoked periodically
+	# former rtc_active_do()
+	#
+	# @param ec_id target ExecutionContext Id
+	#
+	# @return RTC::ReturnCode_t
+	#
+	#
+	def onExecute(self, ec_id):
+		#is changed cam index from conf
+		if(self._CameraIndex[0] != self.cameraIndexOld[0]):
+			#update VideoCapture with new cam index(when changed cam index conf)
+			self.vCap[0].open(self._CameraIndex[0])
+			#update old cam index
+			self.cameraIndexOld[0] = self._CameraIndex[0]
+		
+		#check cam is opened
+		if(self.vCap[0].isOpened() == False):
+			print('out of range cam index. check cam index of conf')
+			return RTC.BAD_PARAMETER
+
+		ret, frame = self.vCap[0].read()
+		if(ret == False):
+			print('can not read image from camera.')
+			return RTC.BAD_PARAMETER
+		
+		#set tm (unix time)
+		self._d_image.tm.sec = math.floor(time.time())
+		#todo raise error when set ns
+		#self._d_image.tm.nsec = time.time_ns()
+
+		#shape
+		#0 -> height
+		#1 -> width
+
+		#follow the order of variables in the reference
+		self._d_image.width = frame.shape[1]
+		self._d_image.height = frame.shape[0]
+		#todo set bpp, format, fDiv
+		#self._d_image.bpp = 8
+		#self._d_image.format = ''
+		#self._d_image.fDiv = 1
+
+		self._d_image.pixels = frame.tobytes()
+
+		#write out data
+		self._imageOut.write()
+
+		return RTC.RTC_OK
+
+	###
+	##
+	## The aborting action when main logic error occurred.
+	## former rtc_aborting_entry()
+	##
+	## @param ec_id target ExecutionContext Id
+	##
+	## @return RTC::ReturnCode_t
+	##
+	##
+	#def onAborting(self, ec_id):
+	#
+	#	return RTC.RTC_OK
+
+	##
+	#
+	# The error action in ERROR state
+	# former rtc_error_do()
+	#
+	# @param ec_id target ExecutionContext Id
+	#
+	# @return RTC::ReturnCode_t
+	#
+	#
+	def onError(self, ec_id):
+	
+		return RTC.RTC_OK
+
+	###
+	##
+	## The reset action that is invoked resetting
+	## This is same but different the former rtc_init_entry()
+	##
+	## @param ec_id target ExecutionContext Id
+	##
+	## @return RTC::ReturnCode_t
+	##
+	##
+	#def onReset(self, ec_id):
+	#
+	#	return RTC.RTC_OK
+
+	###
+	##
+	## The state update action that is invoked after onExecute() action
+	## no corresponding operation exists in OpenRTm-aist-0.2.0
+	##
+	## @param ec_id target ExecutionContext Id
+	##
+	## @return RTC::ReturnCode_t
+	##
+
+	##
+	#def onStateUpdate(self, ec_id):
+	#
+	#	return RTC.RTC_OK
+
+	###
+	##
+	## The action that is invoked when execution context's rate is changed
+	## no corresponding operation exists in OpenRTm-aist-0.2.0
+	##
+	## @param ec_id target ExecutionContext Id
+	##
+	## @return RTC::ReturnCode_t
+	##
+	##
+	#def onRateChanged(self, ec_id):
+	#
+	#	return RTC.RTC_OK
+
+
+
+
+def CameraInit(manager):
+    profile = OpenRTM_aist.Properties(defaults_str=camera_spec)
+    manager.registerFactory(profile,
+                            Camera,
+                            OpenRTM_aist.Delete)
+
+def MyModuleInit(manager):
+    CameraInit(manager)
+
+    # Create a component
+    comp = manager.createComponent("Camera")
+
+def main():
+	mgr = OpenRTM_aist.Manager.init(sys.argv)
+	mgr.setModuleInitProc(MyModuleInit)
+	mgr.activateManager()
+	mgr.runManager()
+
+if __name__ == "__main__":
+	main()
+
