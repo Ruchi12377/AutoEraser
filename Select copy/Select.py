@@ -205,17 +205,14 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 	#
 	#
 	def onExecute(self, ec_id):
-		#this method is only check and set img then show img
-		#check in port
+
 		if(self._ShowImageIn.isNew()):
-			#in port has new buffer
-			#read buffer and reshape as cv2 img
 			rawImage = self._ShowImageIn.read()
 			self.img[0] = numpy.frombuffer(rawImage.pixels, numpy.uint8).reshape((rawImage.height, rawImage.width, 3))
 			self.img[0] = cv2.cvtColor(self.img[0], cv2.COLOR_BGRA2BGR)
-
-		cv2.imshow('WhiteBoard', self.img[0])
-		cv2.waitKey(1)
+		
+		while(1):
+			cv2.imshow('a', self.img[0])
 		
 		return RTC.RTC_OK
 
