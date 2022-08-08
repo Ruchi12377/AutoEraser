@@ -13,7 +13,6 @@ import math
 import sys
 import time
 import cv2
-import numpy
 sys.path.append(".")
 
 # Import RTM module
@@ -45,7 +44,7 @@ camera_spec = ["implementation_id", "Camera",
 		 "lang_type",         "SCRIPT",
 		 "conf.default.CameraIndex", "0",
 
-		 "conf.__widget__.CameraIndex", "spin.1",
+		 "conf.__widget__.CameraIndex", "spin",
 		 "conf.__constraints__.CameraIndex", "x<=5",
 
          "conf.__type__.CameraIndex", "short",

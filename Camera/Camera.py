@@ -45,7 +45,7 @@ camera_spec = ["implementation_id", "Camera",
 		 "conf.default.CameraIndex", "0",
 
 		 "conf.__widget__.CameraIndex", "spin",
-		 "conf.__constraints__.CameraIndex", "x<=5",
+		 "conf.__constraints__.CameraIndex", "0<=x<=5",
 
          "conf.__type__.CameraIndex", "short",
 

@@ -41,11 +41,19 @@ cameratest_spec = ["implementation_id", "CameraTest",
 		 "language",          "Python",
 		 "lang_type",         "SCRIPT",
 		 "conf.default.CameraIndex", "0",
+		 "conf.default.Width", "1920",
+		 "conf.default.Height", "1080",
 
 		 "conf.__widget__.CameraIndex", "spin",
+		 "conf.__widget__.Width", "spin",
+		 "conf.__widget__.Height", "spin",
 		 "conf.__constraints__.CameraIndex", "0<=x<=5",
+		 "conf.__constraints__.Width", "320<=x<=1920",
+		 "conf.__constraints__.Height", "180<=x<=1080",
 
          "conf.__type__.CameraIndex", "short",
+         "conf.__type__.Width", "int",
+         "conf.__type__.Height", "int",
 
 		 ""]
 # </rtc-template>
@@ -81,6 +89,18 @@ class CameraTest(OpenRTM_aist.DataFlowComponentBase):
 		 - DefaultValue: 0
 		"""
 		self._CameraIndex = [0]
+		"""
+		
+		 - Name:  Width
+		 - DefaultValue: 1920
+		"""
+		self._Width = [1920]
+		"""
+		
+		 - Name:  Height
+		 - DefaultValue: 1080
+		"""
+		self._Height = [1080]
 
 		# </rtc-template>
 
@@ -97,6 +117,8 @@ class CameraTest(OpenRTM_aist.DataFlowComponentBase):
 	def onInitialize(self):
 		# Bind variables and configuration variable
 		self.bindParameter("CameraIndex", self._CameraIndex, "0")
+		self.bindParameter("Width", self._Width, "1920")
+		self.bindParameter("Height", self._Height, "1080")
 
 		# Set InPort buffers
 		self.addInPort("image",self._imageIn)

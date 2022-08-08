@@ -43,7 +43,7 @@ Lang Type:
 [on_activated]     implemented
 	Description:   Initializing variables
 
-[on_deactivated]
+[on_deactivated]   implemented
 
 [on_execute]       implemented
 	Description:   Send iamge from camera
@@ -108,6 +108,22 @@ Lang Type:
 		Description:     I think you can only connect up to 5 or less
 		Type:            short
 		DefaultValue:     0
+		Unit:            
+		Range:           
+		Constraint:      
+
+		Name:             Width
+		Description:     
+		Type:            int
+		DefaultValue:     1920
+		Unit:            
+		Range:           
+		Constraint:      
+
+		Name:             Height
+		Description:     
+		Type:            int
+		DefaultValue:     1080
 		Unit:            
 		Range:           
 		Constraint:      

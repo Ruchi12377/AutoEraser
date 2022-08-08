@@ -50,15 +50,21 @@
 # Available configuration parameters
 #
 # conf.default.CameraIndex: 0
+# conf.default.Width: 1920
+# conf.default.Height: 1080
 #
 # Additional configuration-set example named "mode0"
 # "mode0" is the Configuration Set name and can be any string. 
 #
 # conf.mode0.CameraIndex: 0
+# conf.mode0.Width: 1920
+# conf.mode0.Height: 1080
 #
 # Other configuration set named "mode1"
 #
 # conf.mode1.CameraIndex: 0
+# conf.mode1.Width: 1920
+# conf.mode1.Height: 1080
 
 #============================================================
 # Active configuration-set
@@ -276,7 +282,9 @@ exec_cxt.periodic.rate:1000.0
 #                  required. The parameter has to be able to accept a
 #                  comma separated list. In this control, Enumerated
 #                  elements can appear one or more times in the given list.
-# conf.__widget__.CameraIndex, spin.1
+# conf.__widget__.CameraIndex, spin
+# conf.__widget__.Width, spin
+# conf.__widget__.Height, spin
 #
 #------------------------------------------------------------
 # GUI control constraint options [__constraints__]:
@@ -304,7 +312,11 @@ exec_cxt.periodic.rate:1000.0
 # - Array                      : x < 1, x < 10, x > 100
 # - Hash                       : {key0: 100<x<200, key1: x>=100}
 #
-# conf.__constraints__.CameraIndex, x<=5
+# conf.__constraints__.CameraIndex, 0<=x<=5
+# conf.__constraints__.Width, 320<=x<=1920
+# conf.__constraints__.Height, 180<=x<=1080
 
 # conf.__type__.CameraIndex: short
+# conf.__type__.Width: int
+# conf.__type__.Height: int
 

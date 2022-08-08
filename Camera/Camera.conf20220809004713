@@ -50,27 +50,15 @@
 # Available configuration parameters
 #
 # conf.default.CameraIndex: 0
-# conf.default.conf_name1: 0
-# conf.default.conf_name2: 0
-# conf.default.conf_name3: 0
-# conf.default.conf_name4: 0
 #
 # Additional configuration-set example named "mode0"
 # "mode0" is the Configuration Set name and can be any string. 
 #
 # conf.mode0.CameraIndex: 0
-# conf.mode0.conf_name1: 0
-# conf.mode0.conf_name2: 0
-# conf.mode0.conf_name3: 0
-# conf.mode0.conf_name4: 0
 #
 # Other configuration set named "mode1"
 #
 # conf.mode1.CameraIndex: 0
-# conf.mode1.conf_name1: 0
-# conf.mode1.conf_name2: 0
-# conf.mode1.conf_name3: 0
-# conf.mode1.conf_name4: 0
 
 #============================================================
 # Active configuration-set
@@ -288,11 +276,7 @@ exec_cxt.periodic.rate:1000.0
 #                  required. The parameter has to be able to accept a
 #                  comma separated list. In this control, Enumerated
 #                  elements can appear one or more times in the given list.
-# conf.__widget__.CameraIndex, spin.1
-# conf.__widget__.conf_name1, spin
-# conf.__widget__.conf_name2, spin
-# conf.__widget__.conf_name3, spin
-# conf.__widget__.conf_name4, spin
+# conf.__widget__.CameraIndex, spin
 #
 #------------------------------------------------------------
 # GUI control constraint options [__constraints__]:
@@ -323,8 +307,4 @@ exec_cxt.periodic.rate:1000.0
 # conf.__constraints__.CameraIndex, x<=5
 
 # conf.__type__.CameraIndex: short
-# conf.__type__.conf_name1: long
-# conf.__type__.conf_name2: float
-# conf.__type__.conf_name3: double
-# conf.__type__.conf_name4: string
 
