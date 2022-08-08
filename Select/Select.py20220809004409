@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # -*- Python -*-
 
@@ -13,7 +13,6 @@ import math
 import sys
 import time
 import tkinter as tk
-from PIL import Image, ImageTk  # 画像データ用
 import cv2
 import numpy
 sys.path.append(".")
@@ -49,7 +48,7 @@ select_spec = ["implementation_id", "Select",
 		 "conf.default.Height", "450",
 
 		 "conf.__widget__.Width", "text",
-		 "conf.__widget__.Height", "slider.1",
+		 "conf.__widget__.Height", "text",
 		 "conf.__constraints__.Width", "400<=x<=1600",
 		 "conf.__constraints__.Height", "225<=x<=900",
 
@@ -119,8 +118,6 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		self._Height = [450]
 
 		# </rtc-template>
-		self.photoImage = [None]
-		self.showImg = [None]
 		self.window = [None]
 		self.canvas = [None]
 		self.img = [None]
@@ -174,7 +171,6 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		if(isShift(e.keysym)):
 			self.shiftState = False
 
-	#$def fit(self, img, ratio, p1, p2, p3, p4):
 	def fit(self, img, ratio, p1, p2, p3, p4):
 		# l -> left
 		# r -> right
@@ -208,10 +204,10 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		height = math.floor(height)
 
 		src = numpy.float32([lt, rt, lb, rb])
-		dst = numpy.float32([[0, 0], [width, 0], [0, height], [width, height]])
-		
+		dst = numpy.float32([0, 0], [width, 0], [0, height], [width, height])
+
 		matrix = cv2.getPerspectiveTransform(src, dst)
-		return cv2.warpPerspective(img, matrix, (width, height))
+		return cv2.wrapPerspective(img, matrix, (width, height))
 
 	def reset(self, event):
 		self.pos = numpy.array([0, 0], [self._Width, 0], [0, self._Height], [self._Width, self._Height])
@@ -302,7 +298,6 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		self.window[0].resizable(False, False)
 
 		self.canvas = [tk.Canvas(self.window[0])]
-		self.canvas[0].pack(expand=True, fill=tk.BOTH)
 
 		return RTC.RTC_OK
 
@@ -343,28 +338,11 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		#object identity
 		if(self.img[0] is not None):
 			self.img[0] = cv2.resize(self.img[0], (self._Width[0], self._Height[0]))
-			self.img[0] = self.fit(self.img[0], 1, self.pos[0], self.pos[1], self.pos[2], self.pos[3])
-			self.img[0] = cv2.resize(self.img[0], (self._Width[0], self._Height[0]))
-
-			cv_image = cv2.cvtColor(self.img[0], cv2.COLOR_BGR2RGB)
-			# NumPyのndarrayからPillowのImageへ変換
-			pil_image = Image.fromarray(cv_image)
-			self.photoImage[0] = ImageTk.PhotoImage(image=pil_image)
-			# 画像の描画
-			self.showImg[0] = self.canvas[0].create_image(
-					self.window[0].winfo_width() / 2,       # 画像表示位置(Canvasの中心)
-					self.window[0].winfo_height() / 2,                   
-					image=self.photoImage[0]  # 表示画像データ
-					)
-			self.canvas[0].lower(self.showImg[0])
-
-			self.window[0].update_idletasks()
-			self.window[0].update()
-
-			#cv2.imshow('WhiteBoard', self.img[0])
+			cv2.imshow('WhiteBoard', self.img[0])
 			#param->ms
-			#cv2.waitKey(1)
-
+			cv2.waitKey(1)
+			print(self._Width)
+		
 		return RTC.RTC_OK
 
 	###

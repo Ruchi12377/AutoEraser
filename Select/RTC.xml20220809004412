@@ -40,7 +40,7 @@
                     </rtc:propertyIsBetween>
                 </rtc:ConstraintUnitType>
             </rtc:Constraint>
-            <rtcExt:Properties rtcExt:value="slider.1" rtcExt:name="__widget__"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
         </rtc:Configuration>
     </rtc:ConfigurationSet>
     <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="&lt;RTM_ROOT&gt;\rtm\idl\InterfaceDataTypes.idl" rtc:type="RTC::CameraImage" rtc:name="ShowImage" rtc:portType="DataInPort">

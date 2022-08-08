@@ -44,7 +44,7 @@ selecttest_spec = ["implementation_id", "SelectTest",
 		 "conf.default.Height", "450",
 
 		 "conf.__widget__.Width", "text",
-		 "conf.__widget__.Height", "slider.1",
+		 "conf.__widget__.Height", "text",
 		 "conf.__constraints__.Width", "400<=x<=1600",
 		 "conf.__constraints__.Height", "225<=x<=900",
 

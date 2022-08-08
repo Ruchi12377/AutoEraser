@@ -172,23 +172,6 @@ Lang Type:
     Configuration definition
 ======================================================================
 # <rtc-template block="configuration">
-	Configuration:
-		Name:             Width
-		Description:     
-		Type:            int
-		DefaultValue:     800
-		Unit:            
-		Range:           
-		Constraint:      
-
-		Name:             Height
-		Description:     
-		Type:            int
-		DefaultValue:     450
-		Unit:            
-		Range:           
-		Constraint:      
-
 # </rtc-template> 
 
 This software is developed at the National Institute of Advanced

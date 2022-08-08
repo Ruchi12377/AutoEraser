@@ -106,8 +106,6 @@ The available configuration parameters are described below:
 ================ ================== ================ ======
 Parameter        Data type          Default Value    Effect
 ================ ================== ================ ======
-Width            int                800              
-Height           int                450              
 ================ ================== ================ ======
 
 Ports

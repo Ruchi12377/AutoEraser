@@ -280,7 +280,7 @@ exec_cxt.periodic.rate:1000.0
 #                  comma separated list. In this control, Enumerated
 #                  elements can appear one or more times in the given list.
 # conf.__widget__.Width, text
-# conf.__widget__.Height, slider.1
+# conf.__widget__.Height, text
 #
 #------------------------------------------------------------
 # GUI control constraint options [__constraints__]:
