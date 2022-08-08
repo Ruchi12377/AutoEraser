@@ -13,7 +13,7 @@ import math
 import sys
 import time
 import tkinter as tk
-from PIL import Image, ImageTk  # 画像データ用
+from PIL import Image, ImageTk
 import cv2
 import numpy
 sys.path.append(".")
@@ -132,47 +132,53 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		self.shiftState = [False]
 		self.pos = numpy.array([[0, 0], [self._Width[0], 0], [0, self._Height[0]], [self._Width[0], self._Height[0]]])
 		self.cache = numpy.array([[0, 0], [0, 0], [0, 0], [0, 0]])
+		self.rect = [None]
 		self.points = [None, None, None, None]
 
 	def onClick(self, event):
-		self.startX[0] = numpy.clip(event.x, 0, self._Width)
-		self.startY[0] = numpy.clip(event.y, 0, self._Height)
+		self.startX[0] = numpy.clip(event.x, 0, self._Width[0])
+		self.startY[0] = numpy.clip(event.y, 0, self._Height[0])
 
-		if(self.shiftState):
-			target = self.points[self.clickCount]
-			self.cache[self.clickCount] = [event.x, event.y]
-			current = self.canvas.coords(target)
+		if(self.shiftState[0]):
+			target = self.points[self.clickCount[0]]
+			self.cache[self.clickCount[0]] = [event.x, event.y]
+			current = self.canvas[0].coords(target)
 			#todo magick number
 			moveX = event.x - current[2] + 5
 			moveY = event.y - current[3] + 5
-			self.canvas.move(target, moveX, moveY)
-			self.clickCount = (self.clickCount + 1) % 4
+			self.canvas[0].move(target, moveX, moveY)
+			self.clickCount[0] = (self.clickCount[0] + 1) % 4
 
-			if(self.clickCount == 0):
+			if(self.clickCount[0] == 0):
 				self.pos = self.cache
-	
+				#reset pos	
+				self.canvas[0].coords(self.points[0], 0 - 5, 0 - 5, 0 + 5, 0 + 5)
+				self.canvas[0].coords(self.points[1], self._Width[0] - 5, 0 - 5, self._Width[0] + 5, 0 + 5)
+				self.canvas[0].coords(self.points[2], 0 - 5, self._Height[0] - 5, 0 + 5, self._Height[0] + 5)
+				self.canvas[0].coords(self.points[3], self._Width[0] - 5, self._Height[0] - 5, self._Width[0] + 5, self._Height[0] + 5)
+
+
 	def drag(self, event):
-		#todo
-		self.canvas.coords(self.rect, self.startX, self.startY, event.x, event.y)
+		self.canvas[0].coords(self.rect[0], self.startX[0], self.startY[0], event.x, event.y)
 	
 	def release(self, event):
 		endX = numpy.clip(event.x, 0, self._Width[0])
 		endY = numpy.clip(event.y, 0, self._Height[0])
 
-		self.startPos = numpy.array([self.startX, self.startY])
+		self.startPos = numpy.array([self.startX[0], self.startY[0]])
 		self.endPos = numpy.array([endX, endY])
-		self.canvas.corrds(rect, 0, 0, 0, 0)
+		self.canvas[0].coords(self.rect[0], 0, 0, 0, 0)
 
-	def isShift(keysym):
+	def isShift(self, keysym):
 		return keysym == "Shift_L" or keysym == "Shift_R"
 
 	def keyPress(self, e):
-		if(isShift(e.keysym)):
-			self.shiftState = True
+		if(self.isShift(e.keysym)):
+			self.shiftState[0] = True
 	
 	def keyRelease(self, e):
-		if(isShift(e.keysym)):
-			self.shiftState = False
+		if(self.isShift(e.keysym)):
+			self.shiftState[0] = False
 
 	#$def fit(self, img, ratio, p1, p2, p3, p4):
 	def fit(self, img, ratio, p1, p2, p3, p4):
@@ -214,7 +220,7 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		return cv2.warpPerspective(img, matrix, (width, height))
 
 	def reset(self, event):
-		self.pos = numpy.array([0, 0], [self._Width, 0], [0, self._Height], [self._Width, self._Height])
+		self.pos = numpy.array([[0, 0], [self._Width[0], 0], [0, self._Height[0]], [self._Width[0], self._Height[0]]])
 
 	##
 	#
@@ -302,7 +308,23 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		self.window[0].resizable(False, False)
 
 		self.canvas = [tk.Canvas(self.window[0])]
+		self.canvas[0].bind('<ButtonPress-1>', self.onClick)
+		self.canvas[0].bind('<Button1-Motion>', self.drag)
+		self.canvas[0].bind('<ButtonRelease-1>', self.release)
+		self.canvas[0].bind('<KeyPress>', self.keyPress)
+		self.canvas[0].bind('<KeyRelease>', self.keyRelease)
+		self.canvas[0].bind('<Escape>', self.reset)
+		self.canvas[0].focus_set()
 		self.canvas[0].pack(expand=True, fill=tk.BOTH)
+
+		self.rect[0] = self.canvas[0].create_rectangle(
+			0, 0, 0, 0,
+			fill="orange")
+
+		for i in range(0, 4):
+			x = self.pos[i][0]
+			y = self.pos[i][1]
+			self.points[i] = self.canvas[0].create_oval(x - 5, y - 5, x + 5, y + 5, fill="blue")
 
 		return RTC.RTC_OK
 
@@ -342,19 +364,21 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 
 		#object identity
 		if(self.img[0] is not None):
-			self.img[0] = cv2.resize(self.img[0], (self._Width[0], self._Height[0]))
-			self.img[0] = self.fit(self.img[0], 1, self.pos[0], self.pos[1], self.pos[2], self.pos[3])
-			self.img[0] = cv2.resize(self.img[0], (self._Width[0], self._Height[0]))
+			img = cv2.resize(self.img[0], (self._Width[0], self._Height[0]))
+			img = self.fit(img, 1, self.pos[0], self.pos[1], self.pos[2], self.pos[3])
+			img= cv2.resize(img, (self._Width[0], self._Height[0]))
 
-			cv_image = cv2.cvtColor(self.img[0], cv2.COLOR_BGR2RGB)
-			# NumPyのndarrayからPillowのImageへ変換
+			cv_image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+			#convert ndarray to pillow img
 			pil_image = Image.fromarray(cv_image)
+			#we must store show image as variable
+			#because tkinter main loop runs after
 			self.photoImage[0] = ImageTk.PhotoImage(image=pil_image)
-			# 画像の描画
+			#show img
 			self.showImg[0] = self.canvas[0].create_image(
-					self.window[0].winfo_width() / 2,       # 画像表示位置(Canvasの中心)
+					self.window[0].winfo_width() / 2,
 					self.window[0].winfo_height() / 2,                   
-					image=self.photoImage[0]  # 表示画像データ
+					image=self.photoImage[0]  #show img data
 					)
 			self.canvas[0].lower(self.showImg[0])
 
