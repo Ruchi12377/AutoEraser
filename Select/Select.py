@@ -214,9 +214,13 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 			self.img[0] = numpy.frombuffer(rawImage.pixels, numpy.uint8).reshape((rawImage.height, rawImage.width, 3))
 			self.img[0] = cv2.cvtColor(self.img[0], cv2.COLOR_BGRA2BGR)
 
-		cv2.imshow('WhiteBoard', self.img[0])
-		#param->ms
-		cv2.waitKey(1)
+		print(self.img[0])
+
+		#object identity
+		if(self.img[0] is not None):
+			cv2.imshow('WhiteBoard', self.img[0])
+			#param->ms
+			cv2.waitKey(1)
 		
 		return RTC.RTC_OK
 
