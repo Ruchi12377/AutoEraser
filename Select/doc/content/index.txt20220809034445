@@ -121,8 +121,8 @@ Name            Type        Data type                      Purpose
 ShowImage       InPort      RTC::CameraImage               Select target image
 CompeteMotion   InPort      RTC::TimedString               
 StatusCode      InPort      RTC::TimedUShort               
-StartPoint      OutPort     RTC::TimedPoint2D              
-EndPoint        OutPort     RTC::TimedPoint2D              
+StartPoint      OutPort     RTC::Point2D                   
+EndPoint        OutPort     RTC::Point2D                   
 =============== =========== ============================== =======
 
 Examples

@@ -126,7 +126,7 @@ Lang Type:
 	PortNumber:  0
 	Description: 
 	PortType: 
-	DataType:    RTC::TimedPoint2D
+	DataType:    RTC::Point2D
 	MaxOut: 
 	[Data Elements]
 		Name:
@@ -144,7 +144,7 @@ Lang Type:
 	PortNumber:  1
 	Description: 
 	PortType: 
-	DataType:    RTC::TimedPoint2D
+	DataType:    RTC::Point2D
 	MaxOut: 
 	[Data Elements]
 		Name:

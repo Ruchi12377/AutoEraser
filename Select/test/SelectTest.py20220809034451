@@ -68,13 +68,13 @@ class SelectTest(OpenRTM_aist.DataFlowComponentBase):
 	def __init__(self, manager):
 		OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
-		self._d_StartPoint = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
+		self._d_StartPoint = OpenRTM_aist.instantiateDataType(RTC.Point2D)
 		"""
 		 - Semantics: Percentage from top left
 		 - Unit: ratio
 		"""
 		self._StartPointIn = OpenRTM_aist.InPort("StartPoint", self._d_StartPoint)
-		self._d_EndPoint = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
+		self._d_EndPoint = OpenRTM_aist.instantiateDataType(RTC.Point2D)
 		"""
 		 - Semantics: Percentage from top left
 		 - Unit: ratio

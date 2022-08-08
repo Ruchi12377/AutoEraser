@@ -113,8 +113,8 @@ Height           int                450
 ShowImage       InPort      RTC::CameraImage               Select target image
 CompeteMotion   InPort      RTC::TimedString               
 StatusCode      InPort      RTC::TimedUShort               
-StartPoint      OutPort     RTC::TimedPoint2D              
-EndPoint        OutPort     RTC::TimedPoint2D              
+StartPoint      OutPort     RTC::Point2D                   
+EndPoint        OutPort     RTC::Point2D                   
 =============== =========== ============================== ====
 
 例
