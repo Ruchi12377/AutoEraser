@@ -217,11 +217,8 @@ class Camera(OpenRTM_aist.DataFlowComponentBase):
 			print('can not read image from camera.')
 			return RTC.BAD_PARAMETER
 		
-		#set tm (unix time)
-		self._d_image.tm.sec = math.floor(time.time())
-		#todo raise error when set ns
-		#self._d_image.tm.nsec = time.time_ns()
-
+		#set tm (utc)
+		OpenRTM_aist.setTimestamp(self._d_image)
 		#shape
 		#0 -> height
 		#1 -> width

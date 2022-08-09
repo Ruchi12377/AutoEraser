@@ -169,10 +169,10 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		self.canvas[0].coords(self.rect[0], 0, 0, 0, 0)
 
 		#set time and data
-		self._d_StartPoint.tm.sec = time.time()
+		OpenRTM_aist.setTimestamp(self._d_StartPoint)
 		self._d_StartPoint.data.x = self.startPos[0] / self._Width[0]
 		self._d_StartPoint.data.y = self.startPos[1] / self._Height[0]
-		self._d_StartPoint.tm.sec = time.time()
+		OpenRTM_aist.setTimestamp(self._d_EndPoint)
 		self._d_EndPoint.data.x = self.endPos[0] / self._Width[0]
 		self._d_EndPoint.data.y = self.endPos[1] / self._Height[0]
 
