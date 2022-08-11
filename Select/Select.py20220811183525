@@ -47,14 +47,18 @@ select_spec = ["implementation_id", "Select",
 		 "lang_type",		 "SCRIPT",
 		 "conf.default.Width", "800",
 		 "conf.default.Height", "450",
+		 "conf.default.Ratio", "1",
 
 		 "conf.__widget__.Width", "text",
-		 "conf.__widget__.Height", "text",
+		 "conf.__widget__.Height", "slider.1",
+		 "conf.__widget__.Ratio", "slider.0.1",
 		 "conf.__constraints__.Width", "400<=x<=1600",
 		 "conf.__constraints__.Height", "225<=x<=900",
+		 "conf.__constraints__.Ratio", "0.1<=x<=5",
 
 		 "conf.__type__.Width", "int",
 		 "conf.__type__.Height", "int",
+		 "conf.__type__.Ratio", "float",
 
 		 ""]
 # </rtc-template>
@@ -117,6 +121,12 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		 - DefaultValue: 450
 		"""
 		self._Height = [450]
+		"""
+		
+		 - Name:  Ratio
+		 - DefaultValue: 1
+		"""
+		self._Ratio = [1]
 		
 		# </rtc-template>
 		self.photoImage = [None]
@@ -378,7 +388,7 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		#object identity
 		if(self.img[0] is not None):
 			img = cv2.resize(self.img[0], (self._Width[0], self._Height[0]))
-			img = self.fit(img, 1, self.pos[0], self.pos[1], self.pos[2], self.pos[3])
+			img = self.fit(img, self._Ratio[0], self.pos[0], self.pos[1], self.pos[2], self.pos[3])
 			img = cv2.resize(img, (self._Width[0], self._Height[0]))
 
 			cv_image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)

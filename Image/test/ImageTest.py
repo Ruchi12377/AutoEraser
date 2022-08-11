@@ -4,7 +4,7 @@
 
 # <rtc-template block="description">
 """
- @file SelectTest.py
+ @file ImageTest.py
  @brief ModuleDescription
  @date $Date$
 
@@ -25,7 +25,7 @@ import OpenRTM_aist
 # Import Service implementation class
 # <rtc-template block="service_impl">
 
-import Select
+import Image
 
 # </rtc-template>
 
@@ -36,38 +36,33 @@ import Select
 
 # This module's spesification
 # <rtc-template block="module_spec">
-selecttest_spec = ["implementation_id", "SelectTest", 
-         "type_name",         "SelectTest", 
+imagetest_spec = ["implementation_id", "ImageTest", 
+         "type_name",         "ImageTest", 
          "description",       "ModuleDescription", 
          "version",           "1.0.0", 
          "vendor",            "Ruchi", 
-         "category",          "GUI", 
+         "category",          "Category", 
          "activity_type",     "STATIC", 
          "max_instance",      "1", 
          "language",          "Python", 
          "lang_type",         "SCRIPT",
-         "conf.default.Width", "800",
-         "conf.default.Height", "450",
+         "conf.default.Path", """",
 
-         "conf.__widget__.Width", "text",
-         "conf.__widget__.Height", "text",
-         "conf.__constraints__.Width", "400<=x<=1600",
-         "conf.__constraints__.Height", "225<=x<=900",
+         "conf.__widget__.Path", "text",
 
-         "conf.__type__.Width", "int",
-         "conf.__type__.Height", "int",
+         "conf.__type__.Path", "string",
 
          ""]
 # </rtc-template>
 
 # <rtc-template block="component_description">
 ##
-# @class SelectTest
+# @class ImageTest
 # @brief ModuleDescription
 # 
 # 
 # </rtc-template>
-class SelectTest(OpenRTM_aist.DataFlowComponentBase):
+class ImageTest(OpenRTM_aist.DataFlowComponentBase):
     
     ##
     # @brief constructor
@@ -76,31 +71,10 @@ class SelectTest(OpenRTM_aist.DataFlowComponentBase):
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
-        self._d_StartPoint = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
-        """
-         - Semantics: Percentage from top left
-         - Unit: ratio
-        """
-        self._StartPointIn = OpenRTM_aist.InPort("StartPoint", self._d_StartPoint)
-        self._d_EndPoint = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
-        """
-         - Semantics: Percentage from top left
-         - Unit: ratio
-        """
-        self._EndPointIn = OpenRTM_aist.InPort("EndPoint", self._d_EndPoint)
-        self._d_ShowImage = OpenRTM_aist.instantiateDataType(RTC.CameraImage)
-        """
-        Select target image
-        """
-        self._ShowImageOut = OpenRTM_aist.OutPort("ShowImage", self._d_ShowImage)
-        self._d_CompeteMotion = OpenRTM_aist.instantiateDataType(RTC.TimedString)
+        self._d_Image = OpenRTM_aist.instantiateDataType(RTC.CameraImage)
         """
         """
-        self._CompeteMotionOut = OpenRTM_aist.OutPort("CompeteMotion", self._d_CompeteMotion)
-        self._d_StatusCode = OpenRTM_aist.instantiateDataType(RTC.TimedUShort)
-        """
-        """
-        self._StatusCodeOut = OpenRTM_aist.OutPort("StatusCode", self._d_StatusCode)
+        self._ImageIn = OpenRTM_aist.InPort("Image", self._d_Image)
 
 
         
@@ -110,16 +84,10 @@ class SelectTest(OpenRTM_aist.DataFlowComponentBase):
         # <rtc-template block="init_conf_param">
         """
         
-         - Name:  Width
-         - DefaultValue: 800
+         - Name:  Path
+         - DefaultValue: ""
         """
-        self._Width = [800]
-        """
-        
-         - Name:  Height
-         - DefaultValue: 450
-        """
-        self._Height = [450]
+        self._Path = ['""']
         
         # </rtc-template>
 
@@ -134,17 +102,12 @@ class SelectTest(OpenRTM_aist.DataFlowComponentBase):
     #
     def onInitialize(self):
         # Bind variables and configuration variable
-        self.bindParameter("Width", self._Width, "800")
-        self.bindParameter("Height", self._Height, "450")
+        self.bindParameter("Path", self._Path, """")
         
         # Set InPort buffers
-        self.addInPort("StartPoint",self._StartPointIn)
-        self.addInPort("EndPoint",self._EndPointIn)
+        self.addInPort("Image",self._ImageIn)
         
         # Set OutPort buffers
-        self.addOutPort("ShowImage",self._ShowImageOut)
-        self.addOutPort("CompeteMotion",self._CompeteMotionOut)
-        self.addOutPort("StatusCode",self._StatusCodeOut)
         
         # Set service provider to Ports
         
@@ -191,31 +154,31 @@ class SelectTest(OpenRTM_aist.DataFlowComponentBase):
     #
     #    return RTC.RTC_OK
     
+    ###
     ##
+    ## The activated action (Active state entry action)
+    ##
+    ## @param ec_id target ExecutionContext Id
+    ## 
+    ## @return RTC::ReturnCode_t
+    ##
+    ##
+    #def onActivated(self, ec_id):
     #
-    # The activated action (Active state entry action)
-    #
-    # @param ec_id target ExecutionContext Id
-    # 
-    # @return RTC::ReturnCode_t
-    #
-    #
-    def onActivated(self, ec_id):
+    #    return RTC.RTC_OK
     
-        return RTC.RTC_OK
-    
-        ##
+    #    ##
+    ##
+    ## The deactivated action (Active state exit action)
+    ##
+    ## @param ec_id target ExecutionContext Id
+    ##
+    ## @return RTC::ReturnCode_t
+    ##
+    ##
+    #def onDeactivated(self, ec_id):
     #
-    # The deactivated action (Active state exit action)
-    #
-    # @param ec_id target ExecutionContext Id
-    #
-    # @return RTC::ReturnCode_t
-    #
-    #
-    def onDeactivated(self, ec_id):
-    
-        return RTC.RTC_OK
+    #    return RTC.RTC_OK
     
     ##
     #
@@ -301,24 +264,24 @@ class SelectTest(OpenRTM_aist.DataFlowComponentBase):
 
 def RunTest():
     manager = OpenRTM_aist.Manager.instance()
-    comp = manager.getComponent("SelectTest0")
+    comp = manager.getComponent("ImageTest0")
     if comp is None:
         print('Component get failed.', file=sys.stderr)
         return False
     return comp.runTest()
 
-def SelectTestInit(manager):
-    profile = OpenRTM_aist.Properties(defaults_str=selecttest_spec)
+def ImageTestInit(manager):
+    profile = OpenRTM_aist.Properties(defaults_str=imagetest_spec)
     manager.registerFactory(profile,
-                            SelectTest,
+                            ImageTest,
                             OpenRTM_aist.Delete)
 
 def MyModuleInit(manager):
-    SelectTestInit(manager)
-    Select.SelectInit(manager)
+    ImageTestInit(manager)
+    Image.ImageInit(manager)
 
     # Create a component
-    comp = manager.createComponent("SelectTest")
+    comp = manager.createComponent("ImageTest")
 
 def main():
     mgr = OpenRTM_aist.Manager.init(sys.argv)

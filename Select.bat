@@ -1,1 +1,1 @@
-python ./Select/Select.py
+python .\Select\Select.py

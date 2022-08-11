@@ -216,7 +216,7 @@ class Camera(OpenRTM_aist.DataFlowComponentBase):
 		if(ret == False):
 			print('can not read image from camera.')
 			return RTC.BAD_PARAMETER
-		
+				
 		#set tm (utc)
 		OpenRTM_aist.setTimestamp(self._d_image)
 		#shape
@@ -228,7 +228,7 @@ class Camera(OpenRTM_aist.DataFlowComponentBase):
 		self._d_image.height = frame.shape[0]
 		#todo set bpp, format, fDiv
 		#self._d_image.bpp = 8
-		#self._d_image.format = ''
+		self._d_image.format = 'png'
 		#self._d_image.fDiv = 1
 
 		self._d_image.pixels = frame.tobytes()

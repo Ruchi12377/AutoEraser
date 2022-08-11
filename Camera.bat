@@ -1,1 +1,1 @@
-python ./Camera/Camera.py
+python .\Camera\Camera.py

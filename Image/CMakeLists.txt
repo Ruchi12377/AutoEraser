@@ -6,10 +6,10 @@ if(POLICY CMP0053)
   cmake_policy(SET CMP0053 OLD)
 endif()
 
-project(Select)
+project(Image)
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 include("${PROJECT_SOURCE_DIR}/cmake/utils.cmake")
-set(PROJECT_VERSION 1.0.0 CACHE STRING "Select version")
+set(PROJECT_VERSION 1.0.0 CACHE STRING "Image version")
 set(UPGRADE_GUID "")
 DISSECT_VERSION()
 set(PROJECT_SHORT_VER ${PROJECT_VERSION_MAJOR}${PROJECT_VERSION_MINOR}${PROJECT_VERSION_REVISION})
@@ -21,7 +21,7 @@ if(WIN32)
 else()
     set(PYTHON_COMMAND "python3")
 endif()
-set(PROJECT_TYPE "${PYTHON_COMMAND}/GUI")
+set(PROJECT_TYPE "${PYTHON_COMMAND}/Category")
 
 find_package(OpenRTM REQUIRED)
 set(RTM_VER ${OPENRTM_VERSION})
@@ -86,11 +86,11 @@ option(BUILD_IDL "Build and install idl" ON)
 
 
 set(EXEC_FILES ""
-               Select.py
+               Image.py
 )
 
 set(OTHER_SRCS CMakeLists.txt
-               RTC.xml Select.conf rtc.conf)
+               RTC.xml Image.conf rtc.conf)
 
 # check python installed
 find_package(PythonInterp 3)

@@ -1,0 +1,8 @@
+print("what patckage name?")
+packname = input()
+path = './{0}.bat'.format(packname)
+f = open(path, 'w')
+f.write('python ./{0}/{0}.py'.format(packname))
+f.close()
+print('create {0}.bat done'.format(packname))
+input()
