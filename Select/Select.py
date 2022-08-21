@@ -350,7 +350,7 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 	#
 	#
 	def onDeactivated(self, ec_id):
-	
+		self.window[0].destroy()
 		return RTC.RTC_OK
 
 	##
