@@ -18,9 +18,9 @@
 
 | OS       | Windows10                                 |
 | -------- | ----------------------------------------- |
-| RTミドルウェア |                                           |
+| RTミドルウェア | OpenRTM-aist-2.0.0-RELESE(Python 版)       |
 | 開発環境     | VSCode                                    |
-| Python   |                                           |
+| Python   | 3.8.5                                     |
 | 必要モジュール  | math, numpy, cv2, PIL, sys, time, tkinter |
 
 ![](https://cdn.discordapp.com/attachments/1003533769019506689/1026333457497993216/WIN_20221002_12_02_01_Pro.jpg)
