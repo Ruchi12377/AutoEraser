@@ -49,19 +49,19 @@
 #------------------------------------------------------------
 # Available configuration parameters
 #
-# conf.default.Port: COM3
-# conf.default.Baudrate: 9600
+# conf.default.Path: COM3
+# conf.default.Boundrate: 9600
 #
 # Additional configuration-set example named "mode0"
 # "mode0" is the Configuration Set name and can be any string. 
 #
-# conf.mode0.Port: COM3
-# conf.mode0.Baudrate: 9600
+# conf.mode0.Path: COM3
+# conf.mode0.Boundrate: 9600
 #
 # Other configuration set named "mode1"
 #
-# conf.mode1.Port: COM3
-# conf.mode1.Baudrate: 9600
+# conf.mode1.Path: COM3
+# conf.mode1.Boundrate: 9600
 
 #============================================================
 # Active configuration-set
@@ -279,8 +279,8 @@ exec_cxt.periodic.rate:1000.0
 #                  required. The parameter has to be able to accept a
 #                  comma separated list. In this control, Enumerated
 #                  elements can appear one or more times in the given list.
-# conf.__widget__.Port, text
-# conf.__widget__.Baudrate, text
+# conf.__widget__.Path, text
+# conf.__widget__.Boundrate, text
 #
 #------------------------------------------------------------
 # GUI control constraint options [__constraints__]:
@@ -308,8 +308,8 @@ exec_cxt.periodic.rate:1000.0
 # - Array                      : x < 1, x < 10, x > 100
 # - Hash                       : {key0: 100<x<200, key1: x>=100}
 #
-# conf.__constraints__.Baudrate, x>0
+# conf.__constraints__.Boundrate, x>0
 
-# conf.__type__.Port: string
-# conf.__type__.Baudrate: int
+# conf.__type__.Path: string
+# conf.__type__.Boundrate: int
 

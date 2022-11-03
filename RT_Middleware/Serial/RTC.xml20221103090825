@@ -23,7 +23,7 @@
         <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="COM3" rtc:type="string" rtc:name="Port">
             <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
         </rtc:Configuration>
-        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="9600" rtc:type="int" rtc:name="Baudrate">
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="9600" rtc:type="int" rtc:name="Boundrate">
             <rtc:Constraint>
                 <rtc:ConstraintUnitType>
                     <rtc:propertyIsGreaterThan rtc:matchCase="false">

@@ -20,10 +20,10 @@
         <rtc:OnModeChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
     </rtc:Actions>
     <rtc:ConfigurationSet>
-        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="COM3" rtc:type="string" rtc:name="Port">
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="COM3" rtc:type="string" rtc:name="Path">
             <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
         </rtc:Configuration>
-        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="9600" rtc:type="int" rtc:name="Baudrate">
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="9600" rtc:type="int" rtc:name="Boundrate">
             <rtc:Constraint>
                 <rtc:ConstraintUnitType>
                     <rtc:propertyIsGreaterThan rtc:matchCase="false">

@@ -107,7 +107,7 @@ The available configuration parameters are described below:
 Parameter        Data type          Default Value    Effect
 ================ ================== ================ ======
 Port             string             COM3             
-Baudrate         int                9600             
+Boundrate        int                9600             
 ================ ================== ================ ======
 
 Ports

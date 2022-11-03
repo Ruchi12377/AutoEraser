@@ -1,0 +1,1 @@
+python ./Serial/Serial.py -f ./Serial/rtc.conf

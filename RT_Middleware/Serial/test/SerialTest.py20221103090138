@@ -40,15 +40,15 @@ serialtest_spec = ["implementation_id", "SerialTest",
 		 "max_instance",      "1",
 		 "language",          "Python",
 		 "lang_type",         "SCRIPT",
-		 "conf.default.Port", "COM3",
-		 "conf.default.Baudrate", "9600",
+		 "conf.default.Path", "COM3",
+		 "conf.default.Boundrate", "9600",
 
-		 "conf.__widget__.Port", "text",
-		 "conf.__widget__.Baudrate", "text",
-		 "conf.__constraints__.Baudrate", "x>0",
+		 "conf.__widget__.Path", "text",
+		 "conf.__widget__.Boundrate", "text",
+		 "conf.__constraints__.Boundrate", "x>0",
 
-         "conf.__type__.Port", "string",
-         "conf.__type__.Baudrate", "int",
+         "conf.__type__.Path", "string",
+         "conf.__type__.Boundrate", "int",
 
 		 ""]
 # </rtc-template>
@@ -84,16 +84,16 @@ class SerialTest(OpenRTM_aist.DataFlowComponentBase):
 		# <rtc-template block="init_conf_param">
 		"""
 		
-		 - Name:  Port
+		 - Name:  Path
 		 - DefaultValue: COM3
 		"""
-		self._Port = ['COM3']
+		self._Path = ['COM3']
 		"""
 		
-		 - Name:  Baudrate
+		 - Name:  Boundrate
 		 - DefaultValue: 9600
 		"""
-		self._Baudrate = [9600]
+		self._Boundrate = [9600]
 
 		# </rtc-template>
 
@@ -109,8 +109,8 @@ class SerialTest(OpenRTM_aist.DataFlowComponentBase):
 	#
 	def onInitialize(self):
 		# Bind variables and configuration variable
-		self.bindParameter("Port", self._Port, "COM3")
-		self.bindParameter("Baudrate", self._Baudrate, "9600")
+		self.bindParameter("Path", self._Path, "COM3")
+		self.bindParameter("Boundrate", self._Boundrate, "9600")
 
 		# Set InPort buffers
 		self.addInPort("Read",self._ReadIn)
