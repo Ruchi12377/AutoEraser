@@ -1,0 +1,1 @@
+python ./ConsoleIn/ConsoleIn.py -f ./ConsoleIn/rtc.conf
