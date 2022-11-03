@@ -30,7 +30,7 @@
 
 
 
-![](https://cdn.discordapp.com/attachments/1003533769019506689/1026333457497993216/WIN_20221002_12_02_01_Pro.jpg)
+![](./img/entire.jpg)
 
 自動ホワイトボード消しのイメージ
 
@@ -55,11 +55,11 @@
 
 1.詳しく説明してあるコンポーネント図
 
-![](https://cdn.discordapp.com/attachments/1003533769019506689/1017443114140573786/drawio2.png)
+![](./img/components_detail.png)
 
 2.簡潔化しまとまりごとに色分けしたコンポーネント図
 
-![](https://cdn.discordapp.com/attachments/1003533769019506689/1022839602186289162/image1.png)
+![](./img/components.png)
 
 # # 2.コンポーネント
 
