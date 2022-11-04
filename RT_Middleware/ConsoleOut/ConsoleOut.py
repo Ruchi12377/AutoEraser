@@ -3,8 +3,8 @@
 # -*- Python -*-
 
 """
- @file Serial.py
- @brief Serial communication
+ @file ConsoleOut.py
+ @brief ModuleDescription
  @date $Date$
 
 
@@ -13,8 +13,6 @@ import OpenRTM_aist
 import RTC
 import sys
 import time
-import serial
-from serial.tools import list_ports
 sys.path.append(".")
 
 # Import RTM module
@@ -32,37 +30,27 @@ sys.path.append(".")
 
 # This module's spesification
 # <rtc-template block="module_spec">
-serial_spec = ["implementation_id", "Serial",
-               "type_name",		 "Serial",
-               "description",	   "Serial communication",
-               "version",		   "1.0.0",
-               "vendor",			"Ruchi",
-               "category",		  "Category",
-               "activity_type",	 "STATIC",
-               "max_instance",	  "1",
-               "language",		  "Python",
-               "lang_type",		 "SCRIPT",
-               "conf.default.Port", "COM3",
-               "conf.default.Baudrate", "9600",
-
-               "conf.__widget__.Port", "text",
-               "conf.__widget__.Baudrate", "text",
-               "conf.__constraints__.Baudrate", "x>0",
-
-               "conf.__type__.Port", "string",
-               "conf.__type__.Baudrate", "int",
-
-               ""]
+consoleout_spec = ["implementation_id", "ConsoleOut",
+                   "type_name",		 "ConsoleOut",
+                   "description",	   "ModuleDescription",
+                   "version",		   "1.0.0",
+                   "vendor",			"Ruchi",
+                   "category",		  "Category",
+                   "activity_type",	 "STATIC",
+                   "max_instance",	  "1",
+                   "language",		  "Python",
+                   "lang_type",		 "SCRIPT",
+                   ""]
 # </rtc-template>
 
 ##
-# @class Serial
-# @brief Serial communication
+# @class ConsoleOut
+# @brief ModuleDescription
 #
 #
 
 
-class Serial(OpenRTM_aist.DataFlowComponentBase):
+class ConsoleOut(OpenRTM_aist.DataFlowComponentBase):
 
     ##
     # @brief constructor
@@ -71,29 +59,13 @@ class Serial(OpenRTM_aist.DataFlowComponentBase):
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
-        self._d_wData = OpenRTM_aist.instantiateDataType(RTC.TimedString)
+        self._d_data = OpenRTM_aist.instantiateDataType(RTC.TimedString)
         """
 		"""
-        self._WriteIn = OpenRTM_aist.InPort("Write", self._d_wData)
-        self._d_rData = OpenRTM_aist.instantiateDataType(RTC.TimedString)
-        """
-		"""
-        self._ReadOut = OpenRTM_aist.OutPort("Read", self._d_rData)
+        self._dataIn = OpenRTM_aist.InPort("data", self._d_data)
 
         # initialize of configuration-data.
         # <rtc-template block="init_conf_param">
-        """
-
-		 - Name:  Port
-		 - DefaultValue: COM3
-		"""
-        self._Port = ['COM3']
-        """
-
-		 - Name:  Baudrate
-		 - DefaultValue: 9600
-		"""
-        self._Baudrate = [9600]
 
         # </rtc-template>
 
@@ -108,14 +80,11 @@ class Serial(OpenRTM_aist.DataFlowComponentBase):
 
     def onInitialize(self):
         # Bind variables and configuration variable
-        self.bindParameter("Port", self._Port, "COM3")
-        self.bindParameter("Baudrate", self._Baudrate, "9600")
 
         # Set InPort buffers
-        self.addInPort("Write", self._WriteIn)
+        self.addInPort("data", self._dataIn)
 
         # Set OutPort buffers
-        self.addOutPort("Read", self._ReadOut)
 
         # Set service provider to Ports
 
@@ -165,55 +134,33 @@ class Serial(OpenRTM_aist.DataFlowComponentBase):
     #
     # return RTC.RTC_OK
 
+    ###
     ##
-    #
     # The activated action (Active state entry action)
     # former rtc_active_entry()
-    #
-    # @param ec_id target ExecutionContext Id
-    #
-    # @return RTC::ReturnCode_t
-    #
-    #
-    def onActivated(self, ec_id):
-        devices = [info.device for info in list_ports.comports()]
-        # port is not found
-        if ((self._Port[0] in devices) == False):
-            print("port is not found :" + self._Port[0])
-            print("please connect usb, or select a port below")
-            for i in range(len(devices)):
-                print("> " + devices[i])
-            return RTC.RTC_OK
-
-        self.ser = [serial.Serial()]
-        self.ser[0].baudrate = self._Baudrate[0]
-        self.ser[0].port = self._Port[0]
-        self.ser[0].timeout = 1
-
-        try:
-            self.ser[0].open()
-            print("port is opened : " + self._Port[0])
-            return RTC.RTC_OK
-        except:
-            print("Can't open port : " + self._Port[0])
-
-        return RTC.RTC_OK
-
     ##
+    # @param ec_id target ExecutionContext Id
+    ##
+    # @return RTC::ReturnCode_t
+    ##
+    ##
+    # def onActivated(self, ec_id):
     #
+    # return RTC.RTC_OK
+
+    ###
+    ##
     # The deactivated action (Active state exit action)
     # former rtc_active_exit()
-    #
+    ##
     # @param ec_id target ExecutionContext Id
-    #
+    ##
     # @return RTC::ReturnCode_t
+    ##
+    ##
+    # def onDeactivated(self, ec_id):
     #
-    #
-    def onDeactivated(self, ec_id):
-        if (self.ser[0].isOpen()):
-            self.ser[0].close()
-
-        return RTC.RTC_OK
+    # return RTC.RTC_OK
 
     ##
     #
@@ -226,18 +173,8 @@ class Serial(OpenRTM_aist.DataFlowComponentBase):
     #
     #
     def onExecute(self, ec_id):
-        if (self.ser[0].isOpen() == False):
-            return RTC.RTC_OK
-
-        line = self.ser[0].readline().strip().decode('UTF-8')
-        if (len(line) > 0):
-            self._d_rData.data = line
-
-            OpenRTM_aist.setTimestamp(self._d_rData)
-            self._ReadOut.write()
-
-        if (self._WriteIn.isNew()):
-            self.ser[0].write(str.encode(self._WriteIn.read().data))
+        if self._dataIn.isNew():
+            print("output data : " + str(self._dataIn.read().data))
 
         return RTC.RTC_OK
 
@@ -313,18 +250,18 @@ class Serial(OpenRTM_aist.DataFlowComponentBase):
     # return RTC.RTC_OK
 
 
-def SerialInit(manager):
-    profile = OpenRTM_aist.Properties(defaults_str=serial_spec)
+def ConsoleOutInit(manager):
+    profile = OpenRTM_aist.Properties(defaults_str=consoleout_spec)
     manager.registerFactory(profile,
-                            Serial,
+                            ConsoleOut,
                             OpenRTM_aist.Delete)
 
 
 def MyModuleInit(manager):
-    SerialInit(manager)
+    ConsoleOutInit(manager)
 
     # Create a component
-    comp = manager.createComponent("Serial")
+    comp = manager.createComponent("ConsoleOut")
 
 
 def main():

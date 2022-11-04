@@ -1,4 +1,4 @@
-﻿SerialConnectName - English
+﻿SerialName - English
 ========================
 
 .. toctree::
@@ -19,7 +19,7 @@ For a full list of classes and functions, see the `API documentation`_.
 Requirements
 ============
 
-SerialConnect uses the `CMake build system`. You will need at least version
+Serial uses the `CMake build system`. You will need at least version
 2.8 to be able to build the component.
 
 .. _`CMAke build system`:
@@ -43,24 +43,24 @@ recommended method of installation in Windows.
   to take effect before using the component.
 
 The component can be launched by double-clicking the
-``SerialConnectComp`` executable. The ``SerialConnect`` library
+``SerialComp`` executable. The ``Serial`` library
 is available for loading into a manager, using the initialisation function
-``SerialConnectInit``.
+``SerialInit``.
 
 From source
 -----------
 
-Follow these steps to install SerialConnect from source in any operating
+Follow these steps to install Serial from source in any operating
 system:
 
 - Download the source, either from the repository or a source archive,
   and extract it somewhere::
 
-    tar -xvzf SerialConnect-1.0.0.tar.gz
+    tar -xvzf Serial-1.0.0.tar.gz
 
 - Change to the directory containing the extracted source::
 
-    cd SerialConnect-1.0.0
+    cd Serial-1.0.0
 
 - Create a directory called ``build``::
 
@@ -91,10 +91,10 @@ system:
 The component is now ready for use. See the next section for instructions on
 configuring the component.
 
-SerialConnect can be launched in stand-alone mode by executing the
-``SerialConnectComp`` executable (installed into ``${prefix}/components/bin``).
-Alternatively, ``libSerialConnect.so`` can be loaded into a manager, using the
-initialisation function ``SerialConnectInit``. This shared object can be found in
+Serial can be launched in stand-alone mode by executing the
+``SerialComp`` executable (installed into ``${prefix}/components/bin``).
+Alternatively, ``libSerial.so`` can be loaded into a manager, using the
+initialisation function ``SerialInit``. This shared object can be found in
 ``${prefix}/components/lib`` or ``${prefix}/components/lib64``.
 
 
@@ -126,7 +126,7 @@ Examples
 ========
 
 An example configuration file is provided in the
-``${prefix}/components/share/SerialConnect/examples/conf/`` directory.
+``${prefix}/components/share/Serial/examples/conf/`` directory.
 
 Changelog
 =========

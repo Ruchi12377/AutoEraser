@@ -6,14 +6,14 @@ if(POLICY CMP0053)
   cmake_policy(SET CMP0053 OLD)
 endif()
 
-project(SerialConnect)
+project(ConsoleOut)
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 include("${PROJECT_SOURCE_DIR}/cmake/utils.cmake")
-set(PROJECT_VERSION 1.0.0 CACHE STRING "SerialConnect version")
+set(PROJECT_VERSION 1.0.0 CACHE STRING "ConsoleOut version")
 set(UPGRADE_GUID "")
 DISSECT_VERSION()
 set(PROJECT_SHORT_VER ${PROJECT_VERSION_MAJOR}${PROJECT_VERSION_MINOR}${PROJECT_VERSION_REVISION})
-set(PROJECT_DESCRIPTION "Serial communication")
+set(PROJECT_DESCRIPTION "ModuleDescription")
 set(PROJECT_VENDOR "Ruchi")
 set(PROJECT_MAINTAINER "unknown")
 set(PROJECT_TYPE "python/Category")
@@ -79,11 +79,11 @@ option(BUILD_DOCUMENTATION "Build the documentation" OFF)
 
 
 set(EXEC_FILES ""
-               SerialConnect.py
+               ConsoleOut.py
 )
 
 set(OTHER_SRCS CMakeLists.txt
-               RTC.xml SerialConnect.conf rtc.conf)
+               RTC.xml ConsoleOut.conf rtc.conf)
 
 # check python installed
 find_package(PythonInterp)

@@ -1,4 +1,4 @@
-﻿SerialConnectName - English
+﻿ConsoleOutName - English
 ========================
 
 .. toctree::
@@ -19,7 +19,7 @@ For a full list of classes and functions, see the `API documentation`_.
 Requirements
 ============
 
-SerialConnect uses the `CMake build system`. You will need at least version
+ConsoleOut uses the `CMake build system`. You will need at least version
 2.8 to be able to build the component.
 
 .. _`CMAke build system`:
@@ -43,24 +43,24 @@ recommended method of installation in Windows.
   to take effect before using the component.
 
 The component can be launched by double-clicking the
-``SerialConnectComp`` executable. The ``SerialConnect`` library
+``ConsoleOutComp`` executable. The ``ConsoleOut`` library
 is available for loading into a manager, using the initialisation function
-``SerialConnectInit``.
+``ConsoleOutInit``.
 
 From source
 -----------
 
-Follow these steps to install SerialConnect from source in any operating
+Follow these steps to install ConsoleOut from source in any operating
 system:
 
 - Download the source, either from the repository or a source archive,
   and extract it somewhere::
 
-    tar -xvzf SerialConnect-1.0.0.tar.gz
+    tar -xvzf ConsoleOut-1.0.0.tar.gz
 
 - Change to the directory containing the extracted source::
 
-    cd SerialConnect-1.0.0
+    cd ConsoleOut-1.0.0
 
 - Create a directory called ``build``::
 
@@ -91,10 +91,10 @@ system:
 The component is now ready for use. See the next section for instructions on
 configuring the component.
 
-SerialConnect can be launched in stand-alone mode by executing the
-``SerialConnectComp`` executable (installed into ``${prefix}/components/bin``).
-Alternatively, ``libSerialConnect.so`` can be loaded into a manager, using the
-initialisation function ``SerialConnectInit``. This shared object can be found in
+ConsoleOut can be launched in stand-alone mode by executing the
+``ConsoleOutComp`` executable (installed into ``${prefix}/components/bin``).
+Alternatively, ``libConsoleOut.so`` can be loaded into a manager, using the
+initialisation function ``ConsoleOutInit``. This shared object can be found in
 ``${prefix}/components/lib`` or ``${prefix}/components/lib64``.
 
 
@@ -106,8 +106,6 @@ The available configuration parameters are described below:
 ================ ================== ================ ======
 Parameter        Data type          Default Value    Effect
 ================ ================== ================ ======
-Port             string             COM3             
-Baudrate         int                9600             
 ================ ================== ================ ======
 
 Ports
@@ -118,15 +116,14 @@ The ports provided by the component are described below:
 =============== =========== ============================== =======
 Name            Type        Data type                      Purpose
 =============== =========== ============================== =======
-Write           InPort      RTC::TimedString               
-Read            OutPort     RTC::TimedString               
+data            InPort      RTC::TimedString               
 =============== =========== ============================== =======
 
 Examples
 ========
 
 An example configuration file is provided in the
-``${prefix}/components/share/SerialConnect/examples/conf/`` directory.
+``${prefix}/components/share/ConsoleOut/examples/conf/`` directory.
 
 Changelog
 =========

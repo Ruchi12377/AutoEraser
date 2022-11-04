@@ -1,4 +1,4 @@
-﻿SerialConnect - 日本語
+﻿ConsoleOut - 日本語
 =======================
 
 
@@ -13,9 +13,9 @@
 条件
 ====
 
-SerialConnectはOpenRTM-aist 1.0.0以上のC++版が必要です。
+ConsoleOutはOpenRTM-aist 1.0.0以上のC++版が必要です。
 
-SerialConnectは CMake_ を使います。CMake 2.8以上が必要です。
+ConsoleOutは CMake_ を使います。CMake 2.8以上が必要です。
 
 .. _CMAke:
    http://www.cmake.org
@@ -36,8 +36,8 @@ Windowsのユーザはインストーラパッケージを使用してコンポ�
 - 環境変数の変更を適用するため、コンポーネントを使用する前にコンピューターを
   再起動する必要があるかもしれません。
 
-SerialConnectは ``SerialConnectComp`` の実行をダブルクリックして実行することが
-できます。あるいは、 ``SerialConnect`` を初期化関数の ``SerialConnectInit`` を利用して、
+ConsoleOutは ``ConsoleOutComp`` の実行をダブルクリックして実行することが
+できます。あるいは、 ``ConsoleOut`` を初期化関数の ``ConsoleOutInit`` を利用して、
 マネージャにロードすることができます。
 
 ソースから
@@ -47,11 +47,11 @@ SerialConnectは ``SerialConnectComp`` の実行をダブルクリックして�
 
 - ソースをダウンロードして解凍してください::
 
-    tar -xvzf SerialConnect-1.0.0.tar.gz
+    tar -xvzf ConsoleOut-1.0.0.tar.gz
 
 - 解凍されたフォルダに入ってください::
 
-    cd SerialConnect-1.0.0
+    cd ConsoleOut-1.0.0
 
 - ``build`` フォルダを作ってください::
 
@@ -82,9 +82,9 @@ SerialConnectは ``SerialConnectComp`` の実行をダブルクリックして�
 ここまでで、コンポーネントが使えるようになりました。コンフィグレーションは次のセクションを
 参照してください。
 
-SerialConnectは ``SerialConnectComp`` を実行（ ``${prefix}/components/bin`` に
+ConsoleOutは ``ConsoleOutComp`` を実行（ ``${prefix}/components/bin`` に
 インストールされます）することでスタンドアローンモードで実行することができます。
-あるいは、 ``libSerialConnect.so`` を初期化関数の ``SerialConnectInit`` を利用して、
+あるいは、 ``libConsoleOut.so`` を初期化関数の ``ConsoleOutInit`` を利用して、
 マネージャにロードすることができます。このライブラリは ``${prefix}/components/lib`` 
 または ``${prefix}/components/lib64`` にインストールされます。
 
@@ -98,8 +98,6 @@ SerialConnectは ``SerialConnectComp`` を実行（ ``${prefix}/components/bin``
 ================ ================== ================ ====
 パラメータ       データ型           デフォルト値     意味
 ================ ================== ================ ====
-Port             string             COM3             
-Baudrate         int                9600             
 ================ ================== ================ ====
 
 ポート
@@ -110,14 +108,13 @@ Baudrate         int                9600
 =============== =========== ============================== ====
 ポート名        ポート型    データ型                       意味
 =============== =========== ============================== ====
-Write           InPort      RTC::TimedString               
-Read            OutPort     RTC::TimedString               
+data            InPort      RTC::TimedString               
 =============== =========== ============================== ====
 
 例
 ==
 
-例のrtc.confファイルは ``${prefix}/components/share/SerialConnect/examples/conf/``
+例のrtc.confファイルは ``${prefix}/components/share/ConsoleOut/examples/conf/``
 フォルダにインストールされています。
 
 Changelog

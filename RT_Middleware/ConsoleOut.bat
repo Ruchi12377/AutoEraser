@@ -1,0 +1,1 @@
+python ./ConsoleOut/ConsoleOut.py -f ./ConsoleOut/rtc.conf
