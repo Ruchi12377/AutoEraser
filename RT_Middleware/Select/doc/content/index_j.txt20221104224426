@@ -111,6 +111,8 @@ Height           int                450
 ポート名        ポート型    データ型                       意味
 =============== =========== ============================== ====
 ShowImage       InPort      RTC::CameraImage               Select target image
+CompeteMotion   InPort      RTC::TimedString               
+StatusCode      InPort      RTC::TimedUShort               
 StartPoint      OutPort     RTC::TimedPoint2D              
 EndPoint        OutPort     RTC::TimedPoint2D              
 =============== =========== ============================== ====

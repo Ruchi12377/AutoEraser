@@ -32,10 +32,10 @@
 #manager.components.preactivation: Select0
 # Creating connection previously
 #manager.components.preconnect:   ¥
-#  <comp0 name>.<port name>?      ¥
-#  port=<comp1 name>.<port name>& ¥
-#  dataflow_type=push&            ¥
-#  interface_type=corba_cdr
+#   <comp0 name>.<port name>?      ¥
+#   port=<comp1 name>.<port name>& ¥
+#   dataflow_type=push&            ¥
+#   interface_type=corba_cdr
 
 # Execution contexts rate [Hz] setting
 #exec_cxt.periodic.rate: 30
@@ -404,7 +404,7 @@ GUI.Select.config_file: Select.conf
 # - Default: None
 # - Example:
 # corba.args: -ORBInitialHost myhost -ORBInitialPort 8888
-#corba.args:
+corba.args: -ORBgiopMaxMsgSize 20971520
 
 #------------------------------------------------------------
 # CORBA endpoints

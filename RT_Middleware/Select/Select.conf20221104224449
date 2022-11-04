@@ -51,20 +51,17 @@
 #
 # conf.default.Width: 800
 # conf.default.Height: 450
-# conf.default.Ratio: 1
 #
 # Additional configuration-set example named "mode0"
 # "mode0" is the Configuration Set name and can be any string. 
 #
 # conf.mode0.Width: 800
 # conf.mode0.Height: 450
-# conf.mode0.Ratio: 1
 #
 # Other configuration set named "mode1"
 #
 # conf.mode1.Width: 800
 # conf.mode1.Height: 450
-# conf.mode1.Ratio: 1
 
 #============================================================
 # Active configuration-set
@@ -283,8 +280,7 @@ exec_cxt.periodic.rate:1000.0
 #                  comma separated list. In this control, Enumerated
 #                  elements can appear one or more times in the given list.
 # conf.__widget__.Width, text
-# conf.__widget__.Height, slider.1
-# conf.__widget__.Ratio, slider.0.1
+# conf.__widget__.Height, text
 #
 #------------------------------------------------------------
 # GUI control constraint options [__constraints__]:
@@ -314,9 +310,7 @@ exec_cxt.periodic.rate:1000.0
 #
 # conf.__constraints__.Width, 400<=x<=1600
 # conf.__constraints__.Height, 225<=x<=900
-# conf.__constraints__.Ratio, 0.1<=x<=5
 
 # conf.__type__.Width: int
 # conf.__type__.Height: int
-# conf.__type__.Ratio: float
 

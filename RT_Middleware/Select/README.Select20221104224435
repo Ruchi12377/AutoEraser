@@ -78,6 +78,42 @@ Lang Type:
 		RangeHigh:
 		DefaultValue:
 
+	Name:        CompeteMotion
+	PortNumber:  1
+	Description: 
+	PortType: 
+	DataType:    RTC::TimedString
+	MaxOut: 
+	[Data Elements]
+		Name:
+		Type:            
+		Number:          
+		Semantics:       
+		Unit:            
+		Frequency:       
+		Operation Cycle: 
+		RangeLow:
+		RangeHigh:
+		DefaultValue:
+
+	Name:        StatusCode
+	PortNumber:  2
+	Description: 
+	PortType: 
+	DataType:    RTC::TimedUShort
+	MaxOut: 
+	[Data Elements]
+		Name:
+		Type:            
+		Number:          
+		Semantics:       
+		Unit:            
+		Frequency:       
+		Operation Cycle: 
+		RangeLow:
+		RangeHigh:
+		DefaultValue:
+
 
 # </rtc-template>
 

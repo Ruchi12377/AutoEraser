@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rtc:RtcProfile rtc:version="0.3" rtc:id="RTC:Ruchi:GUI:Select:1.0.0" xmlns:rtc="http://www.openrtp.org/namespaces/rtc" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext" xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="Select" rtc:updateDate="2022-08-11T18:25:58.000+09:00" rtc:creationDate="2022-08-08T06:29:22.000+09:00" rtc:version="1.0.0" rtc:vendor="Ruchi" rtc:maxInstances="1" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="1000.0" rtc:description="ModuleDescription" rtc:category="GUI" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="Select">
+<rtc:RtcProfile rtc:version="0.2" rtc:id="RTC:Ruchi:GUI:Select:1.0.0" xmlns:rtc="http://www.openrtp.org/namespaces/rtc" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext" xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="Select" rtc:updateDate="2022-11-04T22:43:52+09:00" rtc:creationDate="2022-11-04T22:38:31+09:00" rtc:version="1.0.0" rtc:vendor="Ruchi" rtc:maxInstances="1" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="1000.0" rtc:description="ModuleDescription" rtc:category="GUI" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="Select">
         <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
     </rtc:BasicInfo>
     <rtc:Actions>
@@ -16,6 +16,8 @@
         <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
         <rtc:OnStateUpdate xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
         <rtc:OnRateChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnAction xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnModeChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
     </rtc:Actions>
     <rtc:ConfigurationSet>
         <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="800" rtc:type="int" rtc:name="Width">
@@ -38,25 +40,12 @@
                     </rtc:propertyIsBetween>
                 </rtc:ConstraintUnitType>
             </rtc:Constraint>
-            <rtcExt:Properties rtcExt:value="slider.1" rtcExt:name="__widget__"/>
-        </rtc:Configuration>
-        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1" rtc:type="float" rtc:name="Ratio">
-            <rtc:Constraint>
-                <rtc:ConstraintUnitType>
-                    <rtc:propertyIsBetween>
-                        <rtc:LowerBoundary>0.1</rtc:LowerBoundary>
-                        <rtc:UpperBoundary>5</rtc:UpperBoundary>
-                    </rtc:propertyIsBetween>
-                </rtc:ConstraintUnitType>
-            </rtc:Constraint>
-            <rtcExt:Properties rtcExt:value="slider.0.1" rtcExt:name="__widget__"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
         </rtc:Configuration>
     </rtc:ConfigurationSet>
     <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="&lt;RTM_ROOT&gt;\rtm\idl\InterfaceDataTypes.idl" rtc:type="RTC::CameraImage" rtc:name="ShowImage" rtc:portType="DataInPort">
         <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="Select target image"/>
     </rtc:DataPorts>
-    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="&lt;RTM_ROOT&gt;\rtm\idl\BasicDataType.idl" rtc:type="RTC::TimedString" rtc:name="CompeteMotion" rtc:portType="DataInPort"/>
-    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="&lt;RTM_ROOT&gt;\rtm\idl\BasicDataType.idl" rtc:type="RTC::TimedUShort" rtc:name="StatusCode" rtc:portType="DataInPort"/>
     <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="RIGHT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="&lt;RTM_ROOT&gt;\rtm\idl\ExtendedDataTypes.idl" rtc:type="RTC::TimedPoint2D" rtc:name="StartPoint" rtc:portType="DataOutPort">
         <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="ratio" rtcDoc:semantics="Percentage from top left" rtcDoc:number="" rtcDoc:type="" rtcDoc:description=""/>
     </rtc:DataPorts>

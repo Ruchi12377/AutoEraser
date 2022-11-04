@@ -35,26 +35,26 @@ import OpenRTM_aist
 
 # This module's spesification
 # <rtc-template block="module_spec">
-select_spec = ["implementation_id", "Select",
-		 "type_name",         "Select",
-		 "description",       "ModuleDescription",
-		 "version",           "1.0.0",
-		 "vendor",            "Ruchi",
-		 "category",          "GUI",
-		 "activity_type",     "STATIC",
-		 "max_instance",      "1",
-		 "language",          "Python",
-		 "lang_type",         "SCRIPT",
+select_spec = ["implementation_id", "Select", 
+		 "type_name",		 "Select", 
+		 "description",	   "ModuleDescription", 
+		 "version",		   "1.0.0", 
+		 "vendor",			"Ruchi", 
+		 "category",		  "GUI", 
+		 "activity_type",	 "STATIC", 
+		 "max_instance",	  "1", 
+		 "language",		  "Python", 
+		 "lang_type",		 "SCRIPT",
 		 "conf.default.Width", "800",
 		 "conf.default.Height", "450",
 
 		 "conf.__widget__.Width", "text",
-		 "conf.__widget__.Height", "slider.1",
+		 "conf.__widget__.Height", "text",
 		 "conf.__constraints__.Width", "400<=x<=1600",
 		 "conf.__constraints__.Height", "225<=x<=900",
 
-         "conf.__type__.Width", "int",
-         "conf.__type__.Height", "int",
+		 "conf.__type__.Width", "int",
+		 "conf.__type__.Height", "int",
 
 		 ""]
 # </rtc-template>
@@ -117,7 +117,7 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		 - DefaultValue: 450
 		"""
 		self._Height = [450]
-
+		
 		# </rtc-template>
 		self.photoImage = [None]
 		self.showImg = [None]
@@ -350,7 +350,7 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 	#
 	#
 	def onDeactivated(self, ec_id):
-	
+		self.window[0].destroy()
 		return RTC.RTC_OK
 
 	##
@@ -378,7 +378,7 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 		#object identity
 		if(self.img[0] is not None):
 			img = cv2.resize(self.img[0], (self._Width[0], self._Height[0]))
-			img = self.fit(img, self._Ratio[0], self.pos[0], self.pos[1], self.pos[2], self.pos[3])
+			img = self.fit(img, 1, self.pos[0], self.pos[1], self.pos[2], self.pos[3])
 			img = cv2.resize(img, (self._Width[0], self._Height[0]))
 
 			cv_image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -390,7 +390,7 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 			#show img
 			self.showImg[0] = self.canvas[0].create_image(
 					self.window[0].winfo_width() / 2,
-					self.window[0].winfo_height() / 2,                   
+					self.window[0].winfo_height() / 2,				   
 					image=self.photoImage[0]  #show img data
 					)
 			self.canvas[0].lower(self.showImg[0])
@@ -479,16 +479,16 @@ class Select(OpenRTM_aist.DataFlowComponentBase):
 
 
 def SelectInit(manager):
-    profile = OpenRTM_aist.Properties(defaults_str=select_spec)
-    manager.registerFactory(profile,
-                            Select,
-                            OpenRTM_aist.Delete)
+	profile = OpenRTM_aist.Properties(defaults_str=select_spec)
+	manager.registerFactory(profile,
+							Select,
+							OpenRTM_aist.Delete)
 
 def MyModuleInit(manager):
-    SelectInit(manager)
+	SelectInit(manager)
 
-    # Create a component
-    comp = manager.createComponent("Select")
+	# Create a component
+	comp = manager.createComponent("Select")
 
 def main():
 	mgr = OpenRTM_aist.Manager.init(sys.argv)
