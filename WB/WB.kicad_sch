@@ -3405,7 +3405,7 @@
     (property "Value" "74HC595" (id 1) (at 212.8394 24.13 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Package_DIP:DIP-16_W10.16mm" (id 2) (at 210.82 39.37 0)
+    (property "Footprint" "Package_DIP:DIP-16_W7.62mm" (id 2) (at 210.82 39.37 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "http://www.ti.com/lit/ds/symlink/sn74hc595.pdf" (id 3) (at 210.82 39.37 0)
@@ -4002,7 +4002,7 @@
     (property "Value" "74HC165" (id 1) (at 127.5206 96.52 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "Package_DIP:DIP-16_W10.16mm" (id 2) (at 127 119.38 0)
+    (property "Footprint" "Package_DIP:DIP-16_W7.62mm" (id 2) (at 127 119.38 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT165.pdf" (id 3) (at 127 119.38 0)
@@ -4381,10 +4381,10 @@
       (reference "SW6") (unit 1) (value "SW_Push") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x02_P1.27mm_Vertical")
     )
     (path "/eb779460-b2c1-42b6-8c85-0417c0d93c62"
-      (reference "U1") (unit 1) (value "74HC165") (footprint "Package_DIP:DIP-16_W10.16mm")
+      (reference "U1") (unit 1) (value "74HC165") (footprint "Package_DIP:DIP-16_W7.62mm")
     )
     (path "/921a3599-130b-432e-842b-41d3a9775a60"
-      (reference "U2") (unit 1) (value "74HC595") (footprint "Package_DIP:DIP-16_W10.16mm")
+      (reference "U2") (unit 1) (value "74HC595") (footprint "Package_DIP:DIP-16_W7.62mm")
     )
     (path "/4e6330dc-1802-420a-9254-c49dd9898d9e"
       (reference "U3") (unit 1) (value "TB6643KQ") (footprint "TB6643KQ:SIP1005W50P254L1965H1265Q7")
