@@ -3,9 +3,9 @@
     "GenerationSoftware": {
       "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version": "(6.0.6-0)"
+      "Version": "(6.0.6)"
     },
-    "CreationDate": "2022-11-10T09:38:14+09:00"
+    "CreationDate": "2022-11-12T19:18:47+09:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -64,11 +64,6 @@
     {
       "Path": "WB-F_Mask.gbr",
       "FileFunction": "SolderMask,Top",
-      "FilePolarity": "Negative"
-    },
-    {
-      "Path": "WB-B_Mask.gbr",
-      "FileFunction": "SolderMask,Bot",
       "FilePolarity": "Negative"
     },
     {
