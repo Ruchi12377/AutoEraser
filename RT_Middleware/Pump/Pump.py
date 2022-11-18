@@ -12,13 +12,13 @@
 """
 # </rtc-template>
 
+import OpenRTM_aist
+import RTC
 import sys
 import time
 sys.path.append(".")
 
 # Import RTM module
-import RTC
-import OpenRTM_aist
 
 
 # Import Service implementation class
@@ -33,130 +33,130 @@ import OpenRTM_aist
 
 # This module's spesification
 # <rtc-template block="module_spec">
-pump_spec = ["implementation_id", "Pump", 
-         "type_name",         "Pump", 
-         "description",       "ModuleDescription", 
-         "version",           "1.0.0", 
-         "vendor",            "VenderName", 
-         "category",          "Category", 
-         "activity_type",     "STATIC", 
-         "max_instance",      "1", 
-         "language",          "Python", 
-         "lang_type",         "SCRIPT",
-         ""]
+pump_spec = ["implementation_id", "Pump",
+             "type_name",         "Pump",
+             "description",       "ModuleDescription",
+             "version",           "1.0.0",
+             "vendor",            "VenderName",
+             "category",          "Category",
+             "activity_type",     "STATIC",
+             "max_instance",      "1",
+             "language",          "Python",
+             "lang_type",         "SCRIPT",
+             ""]
 # </rtc-template>
 
 # <rtc-template block="component_description">
 ##
 # @class Pump
 # @brief ModuleDescription
-# 
-# 
+#
+#
 # </rtc-template>
+
+
 class Pump(OpenRTM_aist.DataFlowComponentBase):
-	
+
     ##
     # @brief constructor
     # @param manager Maneger Object
-    # 
+    #
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
         self._d_WaterAmount = OpenRTM_aist.instantiateDataType(RTC.TimedUShort)
         """
         """
-        self._WaterAmountIn = OpenRTM_aist.InPort("WaterAmount", self._d_WaterAmount)
-        self._d_PumpWaterAmount = OpenRTM_aist.instantiateDataType(RTC.TimedString)
+        self._WaterAmountIn = OpenRTM_aist.InPort(
+            "WaterAmount", self._d_WaterAmount)
+        self._d_PumpWaterAmount = OpenRTM_aist.instantiateDataType(
+            RTC.TimedString)
         """
         """
-        self._PumpWaterAmountOut = OpenRTM_aist.OutPort("PumpWaterAmount", self._d_PumpWaterAmount)
-
-
-		
-
+        self._PumpWaterAmountOut = OpenRTM_aist.OutPort(
+            "PumpWaterAmount", self._d_PumpWaterAmount)
 
         # initialize of configuration-data.
         # <rtc-template block="init_conf_param">
-		
+
         # </rtc-template>
 
-
-		 
     ##
     #
     # The initialize action (on CREATED->ALIVE transition)
-    # 
-    # @return RTC::ReturnCode_t
-    # 
     #
+    # @return RTC::ReturnCode_t
+    #
+    #
+
     def onInitialize(self):
         # Bind variables and configuration variable
-		
+
         # Set InPort buffers
-        self.addInPort("WaterAmount",self._WaterAmountIn)
-		
+        self.addInPort("WaterAmount", self._WaterAmountIn)
+
         # Set OutPort buffers
-        self.addOutPort("PumpWaterAmount",self._PumpWaterAmountOut)
-		
+        self.addOutPort("PumpWaterAmount", self._PumpWaterAmountOut)
+
         # Set service provider to Ports
-		
+
         # Set service consumers to Ports
-		
+
         # Set CORBA Service Ports
-		
+
         return RTC.RTC_OK
-	
+
     ###
-    ## 
-    ## The finalize action (on ALIVE->END transition)
-    ## 
-    ## @return RTC::ReturnCode_t
+    ##
+    # The finalize action (on ALIVE->END transition)
+    ##
+    # @return RTC::ReturnCode_t
     #
-    ## 
-    #def onFinalize(self):
+    ##
+    # def onFinalize(self):
     #
 
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The startup action when ExecutionContext startup
-    ## 
-    ## @param ec_id target ExecutionContext Id
+    # The startup action when ExecutionContext startup
     ##
-    ## @return RTC::ReturnCode_t
+    # @param ec_id target ExecutionContext Id
+    ##
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onStartup(self, ec_id):
+    # def onStartup(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The shutdown action when ExecutionContext stop
+    # The shutdown action when ExecutionContext stop
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onShutdown(self, ec_id):
+    # def onShutdown(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ##
     #
     # The activated action (Active state entry action)
     #
     # @param ec_id target ExecutionContext Id
-    # 
+    #
     # @return RTC::ReturnCode_t
     #
     #
     def onActivated(self, ec_id):
-    
+
         return RTC.RTC_OK
-	
+
     ##
     #
     # The deactivated action (Active state exit action)
@@ -167,9 +167,9 @@ class Pump(OpenRTM_aist.DataFlowComponentBase):
     #
     #
     def onDeactivated(self, ec_id):
-    
+
         return RTC.RTC_OK
-	
+
     ##
     #
     # The execution action that is invoked periodically
@@ -180,79 +180,77 @@ class Pump(OpenRTM_aist.DataFlowComponentBase):
     #
     #
     def onExecute(self, ec_id):
-        if self._WaterAmountIn.isNew(): #新しいデータが来たか確認
-            self._d_WaterAmount = self._WaterAmountIn.read() #値を読み込む
-            self._d_PumpWaterAmount.data = "Pump" +  self._d_WaterAmount.data
+        if (self._WaterAmountIn.isNew()):  # 新しいデータが来たか確認
+            self._d_WaterAmount = self._WaterAmountIn.read()  # 値を読み込む
+            self._d_PumpWaterAmount.data = "Pump " + self._d_WaterAmount.data
             self._PumpWaterAmountOut.write()
         return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The aborting action when main logic error occurred.
+    # The aborting action when main logic error occurred.
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onAborting(self, ec_id):
+    # def onAborting(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The error action in ERROR state
+    # The error action in ERROR state
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onError(self, ec_id):
+    # def onError(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The reset action that is invoked resetting
+    # The reset action that is invoked resetting
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onReset(self, ec_id):
+    # def onReset(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The state update action that is invoked after onExecute() action
+    # The state update action that is invoked after onExecute() action
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
 
     ##
-    #def onStateUpdate(self, ec_id):
+    # def onStateUpdate(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The action that is invoked when execution context's rate is changed
+    # The action that is invoked when execution context's rate is changed
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onRateChanged(self, ec_id):
+    # def onRateChanged(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
-
 
 
 def PumpInit(manager):
@@ -260,6 +258,7 @@ def PumpInit(manager):
     manager.registerFactory(profile,
                             Pump,
                             OpenRTM_aist.Delete)
+
 
 def MyModuleInit(manager):
     PumpInit(manager)
@@ -270,9 +269,10 @@ def MyModuleInit(manager):
         args = instance_name[0].replace("--", "?")
     else:
         args = ""
-  
+
     # Create a component
     comp = manager.createComponent("Pump" + args)
+
 
 def main():
     # remove --instance_name= option
@@ -283,6 +283,6 @@ def main():
     mgr.activateManager()
     mgr.runManager()
 
+
 if __name__ == "__main__":
     main()
-
