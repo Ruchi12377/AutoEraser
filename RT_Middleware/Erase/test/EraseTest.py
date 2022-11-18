@@ -65,10 +65,14 @@ class EraseTest(OpenRTM_aist.DataFlowComponentBase):
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
-        self._d_PointIn = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
+        self._d_StartPos = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
         """
         """
-        self._PointInOut = OpenRTM_aist.OutPort("PointIn", self._d_PointIn)
+        self._StartPosOut = OpenRTM_aist.OutPort("StartPos", self._d_StartPos)
+        self._d_EndPos = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
+        """
+        """
+        self._EndPosOut = OpenRTM_aist.OutPort("EndPos", self._d_EndPos)
 
 
         
@@ -94,7 +98,8 @@ class EraseTest(OpenRTM_aist.DataFlowComponentBase):
         # Set InPort buffers
         
         # Set OutPort buffers
-        self.addOutPort("PointIn",self._PointInOut)
+        self.addOutPort("StartPos",self._StartPosOut)
+        self.addOutPort("EndPos",self._EndPosOut)
         
         # Set service provider to Ports
         

@@ -62,14 +62,10 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
-        self._d_StartPos = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
+        self._d_PointIn = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
         """
         """
-        self._StartPosIn = OpenRTM_aist.InPort("StartPos", self._d_StartPos)
-        self._d_EndPos = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
-        """
-        """
-        self._EndPosIn = OpenRTM_aist.InPort("EndPos", self._d_EndPos)
+        self._PointInIn = OpenRTM_aist.InPort("PointIn", self._d_PointIn)
 
 
 		
@@ -93,8 +89,7 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
         # Bind variables and configuration variable
 		
         # Set InPort buffers
-        self.addInPort("StartPos",self._StartPosIn)
-        self.addInPort("EndPos",self._EndPosIn)
+        self.addInPort("PointIn",self._PointInIn)
 		
         # Set OutPort buffers
 		
@@ -180,19 +175,13 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #
     #
     def onExecute(self, ec_id):
-        if self._StartPosIn.isNew(): #新しいデータが来たか確認
-            self._d_PointIn = self._StartPosIn.read() #値を読み込む
-            self.StartPosX = self._d_StartPos.data.x
-            self.StartPosY = self._d_StartPos.data.y
-            print(self.StartPosX)
-            print(self.StartPosY)  
+        if self._PointInIn.isNew(): #新しいデータが来たか確認
+            self._d_PointIn = self._PointInIn.read() #値を読み込む
+            self.pointX = self._d_PointIn.data.x
+            self.pointY = self._d_PointIn.data.y
+            print(self.pointX)
+            print(self.pointY)   
 
-        if self._EndPosIn.isNew(): #新しいデータが来たか確認
-            self._d_PointIn = self._EndPosIn.read() #値を読み込む
-            self.EndPosX = self._d_EndPos.data.x
-            self.EndPosY = self._d_EndPos.data.y
-            print(self.EndPosX)
-            print(self.EndPosY)   
         return RTC.RTC_OK
 	
     ###

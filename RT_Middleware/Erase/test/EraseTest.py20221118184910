@@ -4,7 +4,7 @@
 
 # <rtc-template block="description">
 """
- @file Erase.py
+ @file EraseTest.py
  @brief ModuleDescription
  @date $Date$
 
@@ -12,6 +12,7 @@
 """
 # </rtc-template>
 
+from __future__ import print_function
 import sys
 import time
 sys.path.append(".")
@@ -24,6 +25,8 @@ import OpenRTM_aist
 # Import Service implementation class
 # <rtc-template block="service_impl">
 
+import Erase
+
 # </rtc-template>
 
 # Import Service stub modules
@@ -33,8 +36,8 @@ import OpenRTM_aist
 
 # This module's spesification
 # <rtc-template block="module_spec">
-erase_spec = ["implementation_id", "Erase", 
-         "type_name",         "Erase", 
+erasetest_spec = ["implementation_id", "EraseTest", 
+         "type_name",         "EraseTest", 
          "description",       "ModuleDescription", 
          "version",           "1.0.0", 
          "vendor",            "VenderName", 
@@ -48,13 +51,13 @@ erase_spec = ["implementation_id", "Erase",
 
 # <rtc-template block="component_description">
 ##
-# @class Erase
+# @class EraseTest
 # @brief ModuleDescription
 # 
 # 
 # </rtc-template>
-class Erase(OpenRTM_aist.DataFlowComponentBase):
-	
+class EraseTest(OpenRTM_aist.DataFlowComponentBase):
+    
     ##
     # @brief constructor
     # @param manager Maneger Object
@@ -62,26 +65,22 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
-        self._d_StartPos = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
+        self._d_PointIn = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
         """
         """
-        self._StartPosIn = OpenRTM_aist.InPort("StartPos", self._d_StartPos)
-        self._d_EndPos = OpenRTM_aist.instantiateDataType(RTC.TimedPoint2D)
-        """
-        """
-        self._EndPosIn = OpenRTM_aist.InPort("EndPos", self._d_EndPos)
+        self._PointInOut = OpenRTM_aist.OutPort("PointIn", self._d_PointIn)
 
 
-		
+        
 
 
         # initialize of configuration-data.
         # <rtc-template block="init_conf_param">
-		
+        
         # </rtc-template>
 
 
-		 
+         
     ##
     #
     # The initialize action (on CREATED->ALIVE transition)
@@ -91,21 +90,20 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #
     def onInitialize(self):
         # Bind variables and configuration variable
-		
+        
         # Set InPort buffers
-        self.addInPort("StartPos",self._StartPosIn)
-        self.addInPort("EndPos",self._EndPosIn)
-		
+        
         # Set OutPort buffers
-		
+        self.addOutPort("PointIn",self._PointInOut)
+        
         # Set service provider to Ports
-		
+        
         # Set service consumers to Ports
-		
+        
         # Set CORBA Service Ports
-		
+        
         return RTC.RTC_OK
-	
+    
     ###
     ## 
     ## The finalize action (on ALIVE->END transition)
@@ -115,10 +113,9 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     ## 
     #def onFinalize(self):
     #
-
     #    return RTC.RTC_OK
-	
-    ###
+    
+    #    ##
     ##
     ## The startup action when ExecutionContext startup
     ## 
@@ -130,7 +127,7 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #def onStartup(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The shutdown action when ExecutionContext stop
@@ -143,7 +140,7 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #def onShutdown(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ##
     #
     # The activated action (Active state entry action)
@@ -156,8 +153,8 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     def onActivated(self, ec_id):
     
         return RTC.RTC_OK
-	
-    ###
+    
+    #    ##
     ##
     ## The deactivated action (Active state exit action)
     ##
@@ -169,7 +166,7 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #def onDeactivated(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ##
     #
     # The execution action that is invoked periodically
@@ -180,21 +177,9 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #
     #
     def onExecute(self, ec_id):
-        if self._StartPosIn.isNew(): #新しいデータが来たか確認
-            self._d_PointIn = self._StartPosIn.read() #値を読み込む
-            self.StartPosX = self._d_StartPos.data.x
-            self.StartPosY = self._d_StartPos.data.y
-            print(self.StartPosX)
-            print(self.StartPosY)  
-
-        if self._EndPosIn.isNew(): #新しいデータが来たか確認
-            self._d_PointIn = self._EndPosIn.read() #値を読み込む
-            self.EndPosX = self._d_EndPos.data.x
-            self.EndPosY = self._d_EndPos.data.y
-            print(self.EndPosX)
-            print(self.EndPosY)   
+    
         return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The aborting action when main logic error occurred.
@@ -202,12 +187,12 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     ## @param ec_id target ExecutionContext Id
     ##
     ## @return RTC::ReturnCode_t
-    ##
+    #    #
     ##
     #def onAborting(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The error action in ERROR state
@@ -220,7 +205,7 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #def onError(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The reset action that is invoked resetting
@@ -233,7 +218,7 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #def onReset(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The state update action that is invoked after onExecute() action
@@ -247,7 +232,7 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #def onStateUpdate(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The action that is invoked when execution context's rate is changed
@@ -260,37 +245,44 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #def onRateChanged(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
+    def runTest(self):
+        return True
 
+def RunTest():
+    manager = OpenRTM_aist.Manager.instance()
+    comp = manager.getComponent("EraseTest0")
+    if comp is None:
+        print('Component get failed.', file=sys.stderr)
+        return False
+    return comp.runTest()
 
-
-def EraseInit(manager):
-    profile = OpenRTM_aist.Properties(defaults_str=erase_spec)
+def EraseTestInit(manager):
+    profile = OpenRTM_aist.Properties(defaults_str=erasetest_spec)
     manager.registerFactory(profile,
-                            Erase,
+                            EraseTest,
                             OpenRTM_aist.Delete)
 
 def MyModuleInit(manager):
-    EraseInit(manager)
+    EraseTestInit(manager)
+    Erase.EraseInit(manager)
 
-    # create instance_name option for createComponent()
-    instance_name = [i for i in sys.argv if "--instance_name=" in i]
-    if instance_name:
-        args = instance_name[0].replace("--", "?")
-    else:
-        args = ""
-  
     # Create a component
-    comp = manager.createComponent("Erase" + args)
+    comp = manager.createComponent("EraseTest")
 
 def main():
-    # remove --instance_name= option
-    argv = [i for i in sys.argv if not "--instance_name=" in i]
-    # Initialize manager
     mgr = OpenRTM_aist.Manager.init(sys.argv)
     mgr.setModuleInitProc(MyModuleInit)
     mgr.activateManager()
-    mgr.runManager()
+    mgr.runManager(True)
+
+    ret = RunTest()
+    mgr.shutdown()
+
+    if ret:
+        sys.exit(0)
+    else:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
