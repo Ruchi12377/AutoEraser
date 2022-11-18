@@ -12,13 +12,13 @@
 """
 # </rtc-template>
 
+import OpenRTM_aist
+import RTC
 import sys
 import time
 sys.path.append(".")
 
 # Import RTM module
-import RTC
-import OpenRTM_aist
 
 
 # Import Service implementation class
@@ -33,32 +33,34 @@ import OpenRTM_aist
 
 # This module's spesification
 # <rtc-template block="module_spec">
-erase_spec = ["implementation_id", "Erase", 
-         "type_name",         "Erase", 
-         "description",       "ModuleDescription", 
-         "version",           "1.0.0", 
-         "vendor",            "VenderName", 
-         "category",          "Category", 
-         "activity_type",     "STATIC", 
-         "max_instance",      "1", 
-         "language",          "Python", 
-         "lang_type",         "SCRIPT",
-         ""]
+erase_spec = ["implementation_id", "Erase",
+              "type_name",         "Erase",
+              "description",       "ModuleDescription",
+              "version",           "1.0.0",
+              "vendor",            "VenderName",
+              "category",          "Category",
+              "activity_type",     "STATIC",
+              "max_instance",      "1",
+              "language",          "Python",
+              "lang_type",         "SCRIPT",
+              ""]
 # </rtc-template>
 
 # <rtc-template block="component_description">
 ##
 # @class Erase
 # @brief ModuleDescription
-# 
-# 
+#
+#
 # </rtc-template>
+
+
 class Erase(OpenRTM_aist.DataFlowComponentBase):
-	
+
     ##
     # @brief constructor
     # @param manager Maneger Object
-    # 
+    #
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
@@ -71,105 +73,100 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
         """
         self._EndPosIn = OpenRTM_aist.InPort("EndPos", self._d_EndPos)
 
-
-		
-
-
         # initialize of configuration-data.
         # <rtc-template block="init_conf_param">
-		
+
         # </rtc-template>
 
-
-		 
     ##
     #
     # The initialize action (on CREATED->ALIVE transition)
-    # 
-    # @return RTC::ReturnCode_t
-    # 
     #
+    # @return RTC::ReturnCode_t
+    #
+    #
+
     def onInitialize(self):
         # Bind variables and configuration variable
-		
+
         # Set InPort buffers
-        self.addInPort("StartPos",self._StartPosIn)
-        self.addInPort("EndPos",self._EndPosIn)
-		
+        self.addInPort("StartPos", self._StartPosIn)
+        self.addInPort("EndPos", self._EndPosIn)
+
         # Set OutPort buffers
-		
+
         # Set service provider to Ports
-		
+
         # Set service consumers to Ports
-		
+
         # Set CORBA Service Ports
-		
+
         return RTC.RTC_OK
-	
+
     ###
-    ## 
-    ## The finalize action (on ALIVE->END transition)
-    ## 
-    ## @return RTC::ReturnCode_t
+    ##
+    # The finalize action (on ALIVE->END transition)
+    ##
+    # @return RTC::ReturnCode_t
     #
-    ## 
-    #def onFinalize(self):
+    ##
+    # def onFinalize(self):
     #
 
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The startup action when ExecutionContext startup
-    ## 
-    ## @param ec_id target ExecutionContext Id
+    # The startup action when ExecutionContext startup
     ##
-    ## @return RTC::ReturnCode_t
+    # @param ec_id target ExecutionContext Id
+    ##
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onStartup(self, ec_id):
+    # def onStartup(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The shutdown action when ExecutionContext stop
+    # The shutdown action when ExecutionContext stop
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onShutdown(self, ec_id):
+    # def onShutdown(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ##
     #
     # The activated action (Active state entry action)
     #
     # @param ec_id target ExecutionContext Id
-    # 
+    #
     # @return RTC::ReturnCode_t
     #
     #
     def onActivated(self, ec_id):
-    
+
         return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The deactivated action (Active state exit action)
+    # The deactivated action (Active state exit action)
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onDeactivated(self, ec_id):
+    # def onDeactivated(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ##
     #
     # The execution action that is invoked periodically
@@ -180,88 +177,86 @@ class Erase(OpenRTM_aist.DataFlowComponentBase):
     #
     #
     def onExecute(self, ec_id):
-        if self._StartPosIn.isNew(): #新しいデータが来たか確認
-            self._d_PointIn = self._StartPosIn.read() #値を読み込む
+        if (self._StartPosIn.isNew()):  # 新しいデータが来たか確認
+            self._d_PointIn = self._StartPosIn.read()  # 値を読み込む
             self.StartPosX = self._d_StartPos.data.x
             self.StartPosY = self._d_StartPos.data.y
             print(self.StartPosX)
-            print(self.StartPosY)  
+            print(self.StartPosY)
 
-        if self._EndPosIn.isNew(): #新しいデータが来たか確認
-            self._d_PointIn = self._EndPosIn.read() #値を読み込む
+        if (self._EndPosIn.isNew()):  # 新しいデータが来たか確認
+            self._d_PointIn = self._EndPosIn.read()  # 値を読み込む
             self.EndPosX = self._d_EndPos.data.x
             self.EndPosY = self._d_EndPos.data.y
             print(self.EndPosX)
-            print(self.EndPosY)   
+            print(self.EndPosY)
         return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The aborting action when main logic error occurred.
+    # The aborting action when main logic error occurred.
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onAborting(self, ec_id):
+    # def onAborting(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The error action in ERROR state
+    # The error action in ERROR state
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onError(self, ec_id):
+    # def onError(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The reset action that is invoked resetting
+    # The reset action that is invoked resetting
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onReset(self, ec_id):
+    # def onReset(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The state update action that is invoked after onExecute() action
+    # The state update action that is invoked after onExecute() action
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
 
     ##
-    #def onStateUpdate(self, ec_id):
+    # def onStateUpdate(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+
     ###
     ##
-    ## The action that is invoked when execution context's rate is changed
+    # The action that is invoked when execution context's rate is changed
     ##
-    ## @param ec_id target ExecutionContext Id
+    # @param ec_id target ExecutionContext Id
     ##
-    ## @return RTC::ReturnCode_t
+    # @return RTC::ReturnCode_t
     ##
     ##
-    #def onRateChanged(self, ec_id):
+    # def onRateChanged(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
-
 
 
 def EraseInit(manager):
@@ -269,6 +264,7 @@ def EraseInit(manager):
     manager.registerFactory(profile,
                             Erase,
                             OpenRTM_aist.Delete)
+
 
 def MyModuleInit(manager):
     EraseInit(manager)
@@ -279,9 +275,10 @@ def MyModuleInit(manager):
         args = instance_name[0].replace("--", "?")
     else:
         args = ""
-  
+
     # Create a component
     comp = manager.createComponent("Erase" + args)
+
 
 def main():
     # remove --instance_name= option
@@ -292,6 +289,6 @@ def main():
     mgr.activateManager()
     mgr.runManager()
 
+
 if __name__ == "__main__":
     main()
-
