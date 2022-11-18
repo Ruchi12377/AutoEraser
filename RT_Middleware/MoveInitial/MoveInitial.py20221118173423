@@ -66,7 +66,7 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
         """
         """
         self._TimeInIn = OpenRTM_aist.InPort("TimeIn", self._d_TimeIn)
-        self._d_TimeOut = OpenRTM_aist.instantiateDataType(RTC.TimedString)
+        self._d_TimeOut = OpenRTM_aist.instantiateDataType(RTC.Time)
         """
         """
         self._TimeOutOut = OpenRTM_aist.OutPort("TimeOut", self._d_TimeOut)
@@ -184,7 +184,7 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
             #self._d_TextIn = self._TextInIn.read() #値を読み込む
             self._d_TimeOut.data = "MoveInitial"
             self._TimeOutOut.write()
-    
+
         return RTC.RTC_OK
 	
     ###

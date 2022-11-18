@@ -167,7 +167,7 @@ ModuleDescription
 <table>
   <tr>
     <td>DataType</td>
-    <td>RTC::TimedString</td>
+    <td>RTC::Time</td>
     <td></td>
   </tr>
   <tr>

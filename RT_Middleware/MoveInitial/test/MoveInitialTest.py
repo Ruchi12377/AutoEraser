@@ -65,7 +65,7 @@ class MoveInitialTest(OpenRTM_aist.DataFlowComponentBase):
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
-        self._d_TimeOut = OpenRTM_aist.instantiateDataType(RTC.Time)
+        self._d_TimeOut = OpenRTM_aist.instantiateDataType(RTC.TimedString)
         """
         """
         self._TimeOutIn = OpenRTM_aist.InPort("TimeOut", self._d_TimeOut)

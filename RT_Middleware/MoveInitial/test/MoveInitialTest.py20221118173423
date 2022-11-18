@@ -4,7 +4,7 @@
 
 # <rtc-template block="description">
 """
- @file MoveInitial.py
+ @file MoveInitialTest.py
  @brief ModuleDescription
  @date $Date$
 
@@ -12,6 +12,7 @@
 """
 # </rtc-template>
 
+from __future__ import print_function
 import sys
 import time
 sys.path.append(".")
@@ -24,6 +25,8 @@ import OpenRTM_aist
 # Import Service implementation class
 # <rtc-template block="service_impl">
 
+import MoveInitial
+
 # </rtc-template>
 
 # Import Service stub modules
@@ -33,8 +36,8 @@ import OpenRTM_aist
 
 # This module's spesification
 # <rtc-template block="module_spec">
-moveinitial_spec = ["implementation_id", "MoveInitial", 
-         "type_name",         "MoveInitial", 
+moveinitialtest_spec = ["implementation_id", "MoveInitialTest", 
+         "type_name",         "MoveInitialTest", 
          "description",       "ModuleDescription", 
          "version",           "1.0.0", 
          "vendor",            "VenderName", 
@@ -48,13 +51,13 @@ moveinitial_spec = ["implementation_id", "MoveInitial",
 
 # <rtc-template block="component_description">
 ##
-# @class MoveInitial
+# @class MoveInitialTest
 # @brief ModuleDescription
 # 
 # 
 # </rtc-template>
-class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
-	
+class MoveInitialTest(OpenRTM_aist.DataFlowComponentBase):
+    
     ##
     # @brief constructor
     # @param manager Maneger Object
@@ -62,26 +65,26 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     def __init__(self, manager):
         OpenRTM_aist.DataFlowComponentBase.__init__(self, manager)
 
+        self._d_TimeOut = OpenRTM_aist.instantiateDataType(RTC.Time)
+        """
+        """
+        self._TimeOutIn = OpenRTM_aist.InPort("TimeOut", self._d_TimeOut)
         self._d_TimeIn = OpenRTM_aist.instantiateDataType(RTC.Time)
         """
         """
-        self._TimeInIn = OpenRTM_aist.InPort("TimeIn", self._d_TimeIn)
-        self._d_TimeOut = OpenRTM_aist.instantiateDataType(RTC.TimedString)
-        """
-        """
-        self._TimeOutOut = OpenRTM_aist.OutPort("TimeOut", self._d_TimeOut)
+        self._TimeInOut = OpenRTM_aist.OutPort("TimeIn", self._d_TimeIn)
 
 
-		
+        
 
 
         # initialize of configuration-data.
         # <rtc-template block="init_conf_param">
-		
+        
         # </rtc-template>
 
 
-		 
+         
     ##
     #
     # The initialize action (on CREATED->ALIVE transition)
@@ -91,21 +94,21 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #
     def onInitialize(self):
         # Bind variables and configuration variable
-		
+        
         # Set InPort buffers
-        self.addInPort("TimeIn",self._TimeInIn)
-		
+        self.addInPort("TimeOut",self._TimeOutIn)
+        
         # Set OutPort buffers
-        self.addOutPort("TimeOut",self._TimeOutOut)
-		
+        self.addOutPort("TimeIn",self._TimeInOut)
+        
         # Set service provider to Ports
-		
+        
         # Set service consumers to Ports
-		
+        
         # Set CORBA Service Ports
-		
+        
         return RTC.RTC_OK
-	
+    
     ###
     ## 
     ## The finalize action (on ALIVE->END transition)
@@ -115,10 +118,9 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     ## 
     #def onFinalize(self):
     #
-
     #    return RTC.RTC_OK
-	
-    ###
+    
+    #    ##
     ##
     ## The startup action when ExecutionContext startup
     ## 
@@ -130,7 +132,7 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #def onStartup(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The shutdown action when ExecutionContext stop
@@ -143,7 +145,7 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #def onShutdown(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ##
     #
     # The activated action (Active state entry action)
@@ -156,8 +158,8 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     def onActivated(self, ec_id):
     
         return RTC.RTC_OK
-	
-    ###
+    
+    #    ##
     ##
     ## The deactivated action (Active state exit action)
     ##
@@ -169,7 +171,7 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #def onDeactivated(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ##
     #
     # The execution action that is invoked periodically
@@ -180,13 +182,9 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #
     #
     def onExecute(self, ec_id):
-        if self._TimeInIn.isNew(): #新しいデータが来たか確認
-            #self._d_TextIn = self._TextInIn.read() #値を読み込む
-            self._d_TimeOut.data = "MoveInitial"
-            self._TimeOutOut.write()
     
         return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The aborting action when main logic error occurred.
@@ -194,12 +192,12 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     ## @param ec_id target ExecutionContext Id
     ##
     ## @return RTC::ReturnCode_t
-    ##
+    #    #
     ##
     #def onAborting(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The error action in ERROR state
@@ -212,7 +210,7 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #def onError(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The reset action that is invoked resetting
@@ -225,7 +223,7 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #def onReset(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The state update action that is invoked after onExecute() action
@@ -239,7 +237,7 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #def onStateUpdate(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
     ###
     ##
     ## The action that is invoked when execution context's rate is changed
@@ -252,37 +250,44 @@ class MoveInitial(OpenRTM_aist.DataFlowComponentBase):
     #def onRateChanged(self, ec_id):
     #
     #    return RTC.RTC_OK
-	
+    
+    def runTest(self):
+        return True
 
+def RunTest():
+    manager = OpenRTM_aist.Manager.instance()
+    comp = manager.getComponent("MoveInitialTest0")
+    if comp is None:
+        print('Component get failed.', file=sys.stderr)
+        return False
+    return comp.runTest()
 
-
-def MoveInitialInit(manager):
-    profile = OpenRTM_aist.Properties(defaults_str=moveinitial_spec)
+def MoveInitialTestInit(manager):
+    profile = OpenRTM_aist.Properties(defaults_str=moveinitialtest_spec)
     manager.registerFactory(profile,
-                            MoveInitial,
+                            MoveInitialTest,
                             OpenRTM_aist.Delete)
 
 def MyModuleInit(manager):
-    MoveInitialInit(manager)
+    MoveInitialTestInit(manager)
+    MoveInitial.MoveInitialInit(manager)
 
-    # create instance_name option for createComponent()
-    instance_name = [i for i in sys.argv if "--instance_name=" in i]
-    if instance_name:
-        args = instance_name[0].replace("--", "?")
-    else:
-        args = ""
-  
     # Create a component
-    comp = manager.createComponent("MoveInitial" + args)
+    comp = manager.createComponent("MoveInitialTest")
 
 def main():
-    # remove --instance_name= option
-    argv = [i for i in sys.argv if not "--instance_name=" in i]
-    # Initialize manager
     mgr = OpenRTM_aist.Manager.init(sys.argv)
     mgr.setModuleInitProc(MyModuleInit)
     mgr.activateManager()
-    mgr.runManager()
+    mgr.runManager(True)
+
+    ret = RunTest()
+    mgr.shutdown()
+
+    if ret:
+        sys.exit(0)
+    else:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
