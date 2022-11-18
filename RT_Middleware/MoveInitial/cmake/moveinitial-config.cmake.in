@@ -1,0 +1,54 @@
+# MoveInitial CMake config file
+#
+# This file sets the following variables:
+# MoveInitial_FOUND - Always TRUE.
+# MoveInitial_INCLUDE_DIRS - Directories containing the MoveInitial include files.
+# MoveInitial_IDL_DIRS - Directories containing the MoveInitial IDL files.
+# MoveInitial_LIBRARIES - Libraries needed to use MoveInitial.
+# MoveInitial_DEFINITIONS - Compiler flags for MoveInitial.
+# MoveInitial_VERSION - The version of MoveInitial found.
+# MoveInitial_VERSION_MAJOR - The major version of MoveInitial found.
+# MoveInitial_VERSION_MINOR - The minor version of MoveInitial found.
+# MoveInitial_VERSION_REVISION - The revision version of MoveInitial found.
+# MoveInitial_VERSION_CANDIDATE - The candidate version of MoveInitial found.
+
+message(STATUS "Found MoveInitial-@PROJECT_VERSION@")
+set(MoveInitial_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(MoveInitial_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(MoveInitial_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(MoveInitial_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(MoveInitial_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(MoveInitial_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(MoveInitial_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(MoveInitial_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(MoveInitial_VERSION @PROJECT_VERSION@)
+set(MoveInitial_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(MoveInitial_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(MoveInitial_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(MoveInitial_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
