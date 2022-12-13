@@ -228,7 +228,6 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
     #
     def onExecute(self, ec_id):
         if self._ImageInIn.isNew(): #新しいデータが来たか確認
-            print("imagein!!!")
             # バッファを読み込み、CV2に変換
             rawImage = self._ImageInIn.read()
             self.Acceptanceimg.append(numpy.frombuffer(rawImage.pixels, numpy.uint8).reshape(
@@ -296,12 +295,14 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
                     self._d_ImageOut.pixels = imgoutput.tobytes()
 
                     self._ImageOutOut.write()
+
+                    cv2.destroyWindow('Original image')
                     
 
             cv2.imshow('Original image', self.img)
             cv2.setMouseCallback('Original image', self.mousePoints)
-
             cv2.waitKey(1)
+            
 
             self.img_jugge == 0    
         return RTC.RTC_OK
