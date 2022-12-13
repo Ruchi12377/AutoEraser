@@ -1,0 +1,1 @@
+python ./MoveInitial/MoveInitial.py -f ./MoveInitial/rtc.conf
