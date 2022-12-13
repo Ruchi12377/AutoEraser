@@ -48,6 +48,15 @@ keystonecorrection_spec = ["implementation_id", "KeystoneCorrection",
          "max_instance",      "1", 
          "language",          "Python", 
          "lang_type",         "SCRIPT",
+         "conf.default.iamgeheight", "500",
+         "conf.default.imagewidth", "1500",
+
+         "conf.__widget__.iamgeheight", "text",
+         "conf.__widget__.imagewidth", "text",
+
+         "conf.__type__.iamgeheight", "int",
+         "conf.__type__.imagewidth", "int",
+
          ""]
 # </rtc-template>
 
@@ -82,6 +91,18 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
 
         # initialize of configuration-data.
         # <rtc-template block="init_conf_param">
+        """
+        
+         - Name:  iamgeheight
+         - DefaultValue: 500
+        """
+        self._iamgeheight = [500]
+        """
+        
+         - Name:  imagewidth
+         - DefaultValue: 1500
+        """
+        self._imagewidth = [1500]
 		
         # </rtc-template>
 
@@ -96,6 +117,8 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
     #
     def onInitialize(self):
         # Bind variables and configuration variable
+        self.bindParameter("iamgeheight", self._iamgeheight, "500")
+        self.bindParameter("imagewidth", self._imagewidth, "1500")
 		
         # Set InPort buffers
         self.addInPort("ImageIn",self._ImageInIn)
@@ -112,7 +135,6 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
         return RTC.RTC_OK
 	
     def mousePoints(self,event, x, y, flags, params):
-        print("mouspoints!!!!!!")
         if event == cv2.EVENT_LBUTTONDOWN:
             print(x,y)
             self.circles[self.counter] = x,y
@@ -169,23 +191,17 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
         self.Acceptanceimg = []
         self.counter = 0
         self.circles = np.zeros((4,2), np.int)
-        self.point1 = []
-        self.point2 = []
-        self.point3 = []
-        self.point4 = []
+        self.point = []
         self.pointx = []
         self.pointy = []
         self.pointul = []
         self.pointbl = []
         self.pointur = []
         self.pointbr = []
-        self.pointleft = []
-        self.pointright = []
-        self.point_synthesis = []
-        self.point_synthesis_numpy = []
+        self.pointsynthesis = []
+        self.pointsynthesis_numpy = []
         self.img_correction = None
-        self.img_jugge = 0
-
+        self.img_jugge = 0    
         return RTC.RTC_OK
 	
     ##
@@ -223,18 +239,18 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
 
             if self.counter ==4 :
                 #4点が順不同の場合に整列する処理
-                self.point1 = self.circles[0].tolist()
-                self.point2 = self.circles[1].tolist()
-                self.point3 = self.circles[2].tolist()
-                self.point4 = self.circles[3].tolist()
-                self.pointx.append(self.point1[0])
-                self.pointx.append(self.point2[0])
-                self.pointx.append(self.point3[0])
-                self.pointx.append(self.point4[0])
-                self.pointy.append(self.point1[1])
-                self.pointy.append(self.point2[1])
-                self.pointy.append(self.point3[1])
-                self.pointy.append(self.point4[1])
+                self.point.append(self.circles[0].tolist())
+                self.point.append(self.circles[1].tolist())
+                self.point.append(self.circles[2].tolist())
+                self.point.append(self.circles[3].tolist())
+                self.pointx.append(self.point[0][0])
+                self.pointx.append(self.point[1][0])
+                self.pointx.append(self.point[2][0])
+                self.pointx.append(self.point[3][0])
+                self.pointy.append(self.point[0][1])
+                self.pointy.append(self.point[1][1])
+                self.pointy.append(self.point[2][1])
+                self.pointy.append(self.point[3][1])
 
                 #x軸、y軸を比較して、4隅を特定
                 for num,point in enumerate(self.pointx):
@@ -251,19 +267,19 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
                         self.pointbr.append(self.pointx[num])
                         self.pointbr.append(self.pointy[num])
                         
-                self.point_synthesis.append(self.pointul)
-                self.point_synthesis.append(self.pointur)
-                self.point_synthesis.append(self.pointbl)
-                self.point_synthesis.append(self.pointbr)
+                self.pointsynthesis.append(self.pointul)
+                self.pointsynthesis.append(self.pointur)
+                self.pointsynthesis.append(self.pointbl)
+                self.pointsynthesis.append(self.pointbr)
                 
                 #台形補正
-                for num,dl in enumerate(self.point_synthesis):
-                    self.point_synthesis[num] = [dl[0],dl[1]]
-                    self.point_synthesis_numpy = np.array(self.point_synthesis)
+                for num,dl in enumerate(self.pointsynthesis):
+                    self.pointsynthesis[num] = [dl[0],dl[1]]
+                    self.pointsynthesis_numpy = np.array(self.pointsynthesis)
 
                 #画像のサイズを設定
-                width , height = 1500, 500 #本システムの場合はホワイトボードの縦横比に合わせる
-                pts1 = np.float32([self.point_synthesis_numpy[0],self.point_synthesis_numpy[1],self.point_synthesis_numpy[2],self.point_synthesis_numpy[3]])
+                width , height = self._imagewidth[0], self._iamgeheight[0] #コンフィグレーション変数で変更可能（本システムの場合はホワイトボードの縦横比に合わせる）
+                pts1 = np.float32([self.pointsynthesis_numpy[0],self.pointsynthesis_numpy[1],self.pointsynthesis_numpy[2],self.pointsynthesis_numpy[3]])
                 pts2 = np.float32([[0,0],[width,0],[0,height],[width,height]])
                 matrix = cv2.getPerspectiveTransform(pts1,pts2)
                 imgoutput = cv2.warpPerspective(self.img, matrix,(width, height))
@@ -277,7 +293,6 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
 
                     self._d_ImageOut.width = imgoutput.shape[1]
                     self._d_ImageOut.height = imgoutput.shape[0]
-                    self._d_ImageOut.format = 'jpg'
                     self._d_ImageOut.pixels = imgoutput.tobytes()
 
                     self._ImageOutOut.write()
@@ -287,6 +302,8 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
             cv2.setMouseCallback('Original image', self.mousePoints)
 
             cv2.waitKey(1)
+
+            self.img_jugge == 0    
         return RTC.RTC_OK
 	
     ###

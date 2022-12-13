@@ -46,15 +46,6 @@ keystonecorrectiontest_spec = ["implementation_id", "KeystoneCorrectionTest",
          "max_instance",      "1", 
          "language",          "Python", 
          "lang_type",         "SCRIPT",
-         "conf.default.iamgeheight", "500",
-         "conf.default.imagewidth", "1500",
-
-         "conf.__widget__.iamgeheight", "text",
-         "conf.__widget__.imagewidth", "text",
-
-         "conf.__type__.iamgeheight", "int",
-         "conf.__type__.imagewidth", "int",
-
          ""]
 # </rtc-template>
 
@@ -89,18 +80,6 @@ class KeystoneCorrectionTest(OpenRTM_aist.DataFlowComponentBase):
 
         # initialize of configuration-data.
         # <rtc-template block="init_conf_param">
-        """
-        
-         - Name:  iamgeheight
-         - DefaultValue: 500
-        """
-        self._iamgeheight = [500]
-        """
-        
-         - Name:  imagewidth
-         - DefaultValue: 1500
-        """
-        self._imagewidth = [1500]
         
         # </rtc-template>
 
@@ -115,8 +94,6 @@ class KeystoneCorrectionTest(OpenRTM_aist.DataFlowComponentBase):
     #
     def onInitialize(self):
         # Bind variables and configuration variable
-        self.bindParameter("iamgeheight", self._iamgeheight, "500")
-        self.bindParameter("imagewidth", self._imagewidth, "1500")
         
         # Set InPort buffers
         self.addInPort("ImageOut",self._ImageOutIn)

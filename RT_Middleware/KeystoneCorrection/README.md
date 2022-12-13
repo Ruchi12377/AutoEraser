@@ -214,6 +214,84 @@ ModuleDescription
 
 ### Configuration definition
 
+#### iamgeheight
+
+
+
+
+<table>
+  <tr>
+    <td>DataType</td>
+    <td colspan="2">int</td>
+  </tr>
+  <tr>
+    <td>DefaultValue</td>
+    <td>500</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Unit</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Widget</td>
+    <td colspan="2">text</td>
+  </tr>
+  <tr>
+    <td>Step</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td>Constraint</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Range</td>
+    <td colspan="2"></td>
+  </tr>
+</table>
+
+#### imagewidth
+
+
+
+
+<table>
+  <tr>
+    <td>DataType</td>
+    <td colspan="2">int</td>
+  </tr>
+  <tr>
+    <td>DefaultValue</td>
+    <td>1500</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Unit</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Widget</td>
+    <td colspan="2">text</td>
+  </tr>
+  <tr>
+    <td>Step</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td>Constraint</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Range</td>
+    <td colspan="2"></td>
+  </tr>
+</table>
+
 
 ## Demo
 
