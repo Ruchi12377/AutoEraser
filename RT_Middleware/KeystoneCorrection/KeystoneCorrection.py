@@ -48,14 +48,14 @@ keystonecorrection_spec = ["implementation_id", "KeystoneCorrection",
          "max_instance",      "1", 
          "language",          "Python", 
          "lang_type",         "SCRIPT",
-         "conf.default.iamgeheight", "500",
-         "conf.default.imagewidth", "1500",
+         "conf.default.height", "500",
+         "conf.default.width", "1500",
 
-         "conf.__widget__.iamgeheight", "text",
-         "conf.__widget__.imagewidth", "text",
+         "conf.__widget__.height", "text",
+         "conf.__widget__.width", "text",
 
-         "conf.__type__.iamgeheight", "int",
-         "conf.__type__.imagewidth", "int",
+         "conf.__type__.height", "int",
+         "conf.__type__.width", "int",
 
          ""]
 # </rtc-template>
@@ -93,16 +93,16 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
         # <rtc-template block="init_conf_param">
         """
         
-         - Name:  iamgeheight
+         - Name:  height
          - DefaultValue: 500
         """
-        self._iamgeheight = [500]
+        self._height = [500]
         """
         
-         - Name:  imagewidth
+         - Name:  width
          - DefaultValue: 1500
         """
-        self._imagewidth = [1500]
+        self._width = [1500]
 		
         # </rtc-template>
 
@@ -117,8 +117,8 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
     #
     def onInitialize(self):
         # Bind variables and configuration variable
-        self.bindParameter("iamgeheight", self._iamgeheight, "500")
-        self.bindParameter("imagewidth", self._imagewidth, "1500")
+        self.bindParameter("height", self._height, "500")
+        self.bindParameter("width", self._width, "1500")
 		
         # Set InPort buffers
         self.addInPort("ImageIn",self._ImageInIn)
@@ -133,13 +133,13 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
         # Set CORBA Service Ports
 		
         return RTC.RTC_OK
-	
+
     def mousePoints(self,event, x, y, flags, params):
         if event == cv2.EVENT_LBUTTONDOWN:
             print(x,y)
             self.circles[self.counter] = x,y
             self.counter = self.counter + 1
-            print(self.circles)
+            print(self.circles)	
     ###
     ## 
     ## The finalize action (on ALIVE->END transition)
@@ -192,16 +192,15 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
         self.counter = 0
         self.circles = np.zeros((4,2), np.int)
         self.point = []
-        self.pointx = []
-        self.pointy = []
-        self.pointul = []
-        self.pointbl = []
-        self.pointur = []
-        self.pointbr = []
-        self.pointsynthesis = []
-        self.pointsynthesis_numpy = []
-        self.img_correction = None
-        self.img_jugge = 0    
+        self.pointX = []
+        self.pointY = []
+        self.pointUl = []
+        self.pointBl = []
+        self.pointUr = []
+        self.pointBr = []
+        self.pointSynthesis = []
+        self.pointSynthesisNumpy = []
+        self.imgJugge = 0        
         return RTC.RTC_OK
 	
     ##
@@ -242,53 +241,53 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
                 self.point.append(self.circles[1].tolist())
                 self.point.append(self.circles[2].tolist())
                 self.point.append(self.circles[3].tolist())
-                self.pointx.append(self.point[0][0])
-                self.pointx.append(self.point[1][0])
-                self.pointx.append(self.point[2][0])
-                self.pointx.append(self.point[3][0])
-                self.pointy.append(self.point[0][1])
-                self.pointy.append(self.point[1][1])
-                self.pointy.append(self.point[2][1])
-                self.pointy.append(self.point[3][1])
+                self.pointX.append(self.point[0][0])
+                self.pointX.append(self.point[1][0])
+                self.pointX.append(self.point[2][0])
+                self.pointX.append(self.point[3][0])
+                self.pointY.append(self.point[0][1])
+                self.pointY.append(self.point[1][1])
+                self.pointY.append(self.point[2][1])
+                self.pointY.append(self.point[3][1])
 
                 #x軸、y軸を比較して、4隅を特定
-                for num,point in enumerate(self.pointx):
-                    if point <= statistics.mean(self.pointx) and self.pointy[num] <= statistics.mean(self.pointy):
-                        self.pointul.append(self.pointx[num])
-                        self.pointul.append(self.pointy[num])
-                    elif point >= statistics.mean(self.pointx) and self.pointy[num] <= statistics.mean(self.pointy):
-                        self.pointur.append(self.pointx[num])
-                        self.pointur.append(self.pointy[num])
-                    elif point <= statistics.mean(self.pointx) and self.pointy[num] >= statistics.mean(self.pointy):
-                        self.pointbl.append(self.pointx[num])
-                        self.pointbl.append(self.pointy[num])
-                    elif point >= statistics.mean(self.pointx) and self.pointy[num] >= statistics.mean(self.pointy):
-                        self.pointbr.append(self.pointx[num])
-                        self.pointbr.append(self.pointy[num])
+                for num,point in enumerate(self.pointX):
+                    if point <= statistics.mean(self.pointX) and self.pointY[num] <= statistics.mean(self.pointY):
+                        self.pointUl.append(self.pointX[num])
+                        self.pointUl.append(self.pointY[num])
+                    elif point >= statistics.mean(self.pointX) and self.pointY[num] <= statistics.mean(self.pointY):
+                        self.pointUr.append(self.pointX[num])
+                        self.pointUr.append(self.pointY[num])
+                    elif point <= statistics.mean(self.pointX) and self.pointY[num] >= statistics.mean(self.pointY):
+                        self.pointBl.append(self.pointX[num])
+                        self.pointBl.append(self.pointY[num])
+                    elif point >= statistics.mean(self.pointX) and self.pointY[num] >= statistics.mean(self.pointY):
+                        self.pointBr.append(self.pointX[num])
+                        self.pointBr.append(self.pointY[num])
                         
-                self.pointsynthesis.append(self.pointul)
-                self.pointsynthesis.append(self.pointur)
-                self.pointsynthesis.append(self.pointbl)
-                self.pointsynthesis.append(self.pointbr)
+                self.pointSynthesis.append(self.pointUl)
+                self.pointSynthesis.append(self.pointUr)
+                self.pointSynthesis.append(self.pointBl)
+                self.pointSynthesis.append(self.pointBr)
                 
                 #台形補正
-                for num,dl in enumerate(self.pointsynthesis):
-                    self.pointsynthesis[num] = [dl[0],dl[1]]
-                    self.pointsynthesis_numpy = np.array(self.pointsynthesis)
+                for num,dl in enumerate(self.pointSynthesis):
+                    self.pointSynthesis[num] = [dl[0],dl[1]]
+                    self.pointsynthesisNumpy = np.array(self.pointSynthesis)
 
                 #画像のサイズを設定
-                width , height = self._imagewidth[0], self._iamgeheight[0] #コンフィグレーション変数で変更可能（本システムの場合はホワイトボードの縦横比に合わせる）
-                pts1 = np.float32([self.pointsynthesis_numpy[0],self.pointsynthesis_numpy[1],self.pointsynthesis_numpy[2],self.pointsynthesis_numpy[3]])
+                width , height = self._width[0], self._height[0] #コンフィグレーション変数で変更可能（本システムの場合はホワイトボードの縦横比に合わせる）
+                pts1 = np.float32([self.pointsynthesisNumpy[0],self.pointsynthesisNumpy[1],self.pointsynthesisNumpy[2],self.pointsynthesisNumpy[3]])
                 pts2 = np.float32([[0,0],[width,0],[0,height],[width,height]])
                 matrix = cv2.getPerspectiveTransform(pts1,pts2)
                 imgoutput = cv2.warpPerspective(self.img, matrix,(width, height))
                 #cv2.imshow('Output image', imgoutput)
-                self.img_jugge = 1
+                self.imgJugge = 1
 
                 for x in range(0, 4):
                     cv2.circle(self.img, (self.circles[x][0], self.circles[x][1]), 3, (0, 255, 0), cv2.FILLED)
 
-                if self.img_jugge == 1:
+                if self.imgJugge == 1:
 
                     self._d_ImageOut.width = imgoutput.shape[1]
                     self._d_ImageOut.height = imgoutput.shape[0]
@@ -304,7 +303,7 @@ class KeystoneCorrection(OpenRTM_aist.DataFlowComponentBase):
             cv2.waitKey(1)
             
 
-            self.img_jugge == 0    
+            self.imgJugge == 0        
         return RTC.RTC_OK
 	
     ###

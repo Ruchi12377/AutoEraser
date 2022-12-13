@@ -214,7 +214,7 @@ ModuleDescription
 
 ### Configuration definition
 
-#### iamgeheight
+#### height
 
 
 
@@ -253,7 +253,7 @@ ModuleDescription
   </tr>
 </table>
 
-#### imagewidth
+#### width
 
 
 
