@@ -40,20 +40,20 @@ keystonecorrectiontest_spec = ["implementation_id", "KeystoneCorrectionTest",
          "type_name",         "KeystoneCorrectionTest", 
          "description",       "ModuleDescription", 
          "version",           "1.0.0", 
-         "vendor",            "tbou30897", 
+         "vendor",            "VenderName", 
          "category",          "Category", 
          "activity_type",     "STATIC", 
          "max_instance",      "1", 
          "language",          "Python", 
          "lang_type",         "SCRIPT",
-         "conf.default.height", "900",
-         "conf.default.width", "1600",
+         "conf.default.iamgeheight", "500",
+         "conf.default.imagewidth", "1500",
 
-         "conf.__widget__.height", "text",
-         "conf.__widget__.width", "text",
+         "conf.__widget__.iamgeheight", "text",
+         "conf.__widget__.imagewidth", "text",
 
-         "conf.__type__.height", "int",
-         "conf.__type__.width", "int",
+         "conf.__type__.iamgeheight", "int",
+         "conf.__type__.imagewidth", "int",
 
          ""]
 # </rtc-template>
@@ -91,16 +91,16 @@ class KeystoneCorrectionTest(OpenRTM_aist.DataFlowComponentBase):
         # <rtc-template block="init_conf_param">
         """
         
-         - Name:  height
-         - DefaultValue: 900
+         - Name:  iamgeheight
+         - DefaultValue: 500
         """
-        self._height = [900]
+        self._iamgeheight = [500]
         """
         
-         - Name:  width
-         - DefaultValue: 1600
+         - Name:  imagewidth
+         - DefaultValue: 1500
         """
-        self._width = [1600]
+        self._imagewidth = [1500]
         
         # </rtc-template>
 
@@ -115,8 +115,8 @@ class KeystoneCorrectionTest(OpenRTM_aist.DataFlowComponentBase):
     #
     def onInitialize(self):
         # Bind variables and configuration variable
-        self.bindParameter("height", self._height, "900")
-        self.bindParameter("width", self._width, "1600")
+        self.bindParameter("iamgeheight", self._iamgeheight, "500")
+        self.bindParameter("imagewidth", self._imagewidth, "1500")
         
         # Set InPort buffers
         self.addInPort("ImageOut",self._ImageOutIn)
