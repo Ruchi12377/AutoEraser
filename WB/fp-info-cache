@@ -1,4 +1,4 @@
-20338407452363195
+20348166524401452
 2sk2232
 TO254P1054X470X1955-3
 
@@ -6,6 +6,48 @@ TO254P1054X470X1955-3
 0
 3
 3
+ARDUINO_NANO
+SHIELD_ARDUINO_NANO
+
+
+0
+30
+30
+Arduino
+Arduino_Micro
+Arduino Micro
+Arduino Micro
+0
+34
+34
+Arduino
+Arduino_Nano
+Arduino Nano
+Arduino Nano
+0
+30
+30
+Arduino
+Arduino_Nano_Every
+Arduino Nano Every
+Arduino Nano Every
+0
+30
+30
+Arduino
+Arduino_Pro_Mini
+Arduino Pro Mini
+Arduino Pro Mini
+0
+28
+28
+Arduino
+Sparkfun_Pro_Micro
+Sparkfun Pro Micro
+Arduino Sparkfun Pro Micro
+0
+24
+24
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
